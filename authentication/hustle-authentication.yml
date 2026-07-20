@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.hustle.com/v3/docs/
+docs: https://api.hustle.com/v3/docs/
+spec: openapi/hustle-openapi-original.json
+summary:
+  types: [oauth2]
+  oauth2_flows: [clientCredentials]
+  token_type: Bearer
+  note: >-
+    The OpenAPI does not declare a components.securitySchemes block; the auth
+    model below is captured from the documented /oauth/token operation and the
+    Bearer authorization described in the spec's response text.
+schemes:
+- name: OAuth2ClientCredentials
+  type: oauth2
+  flow: clientCredentials
+  token_url: https://api.hustle.com/v3/oauth/token
+  grant_type: client_credentials
+  credentials:
+    client_id: email-formatted client id issued by Hustle
+    client_secret: secret issued by Hustle
+  returns:
+    access_token: opaque bearer token
+    token_type: Bearer
+    scope: returned on the token response
+    expires_in: token lifetime in seconds
+  usage: >-
+    Server-side / backend applications authenticate to mint an access token,
+    then send it on subsequent requests as `Authorization: Bearer <token>`.
+  sources: [openapi/hustle-openapi-original.json]
