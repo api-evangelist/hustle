@@ -1,0 +1,164 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Organizations API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Organizations
+paths:
+  /organizations:
+    get:
+      summary: Get Organizations
+      description: Get a list of organizations scoped by the query parameters.
+      tags:
+      - Organizations
+      parameters:
+      - schema:
+          type: string
+          description: Organization ID
+        required: false
+        description: Organization ID
+        name: id
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of organizations filtered by the query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Organization'
+                    description: List of organizations that match the specified filter.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the organization.
+        type:
+          type: string
+          enum:
+          - organization
+          description: The type of object the attached ID corresponds to.
+        name:
+          type: string
+          description: The name of the organization.
+        integrations:
+          type: array
+          items:
+            type: string
+          description: The IDs of the integrations the organization owns.
+        balances:
+          type: object
+          properties:
+            smsBalance:
+              type: number
+              description: The number of SMS messages the organization has remaining.
+            mmsBalance:
+              type: number
+              description: The number of MMS messages the organization has remaining.
+            callBalance:
+              type: number
+              description: The number of calls the organization has remaining.
+          required:
+          - smsBalance
+          - mmsBalance
+          - callBalance
+          description: The message and call balances for the organization. This property will only show up if the organization has these enabled.
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the organization was created.
+      required:
+      - id
+      - type
+      - name
+      - integrations
+      - createdAt
+      additionalProperties: false
+      description: An organization owns multiple groups and is the entity leads are scoped to in Hustle.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

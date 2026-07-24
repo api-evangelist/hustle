@@ -1,0 +1,680 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Leads API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Leads
+paths:
+  /leads:
+    get:
+      summary: Get Leads
+      description: Get a list of leads scoped by the query parameters.
+      tags:
+      - Leads
+      parameters:
+      - schema:
+          type: string
+          description: Lead ID
+        required: false
+        description: Lead ID
+        name: id
+        in: query
+      - schema:
+          type: string
+          pattern: ^\+[1-9]\d{1,14}$|^\d{5,6}$
+          description: The Lead's phone number. Represented as an E.164 Format (i.e +15554441234 for (555) 444-1234 in the US).
+        required: false
+        description: The Lead's phone number. Represented as an E.164 Format (i.e +15554441234 for (555) 444-1234 in the US).
+        name: phoneNumber
+        in: query
+      - schema:
+          type: string
+          description: Organization ID.
+        required: false
+        description: Organization ID.
+        name: organizationId
+        in: query
+      - schema:
+          type: string
+          description: A Group ID. This will return a lead that has this group inside of the activeGroupIds array. To also include inactive groups, use the searchInactiveGroups query parameter.
+        required: false
+        description: A Group ID. This will return a lead that has this group inside of the activeGroupIds array. To also include inactive groups, use the searchInactiveGroups query parameter.
+        name: groupId
+        in: query
+      - schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - all
+          description: When a groupId is passed, this determines whether we look in the activeGroupIds array, inactiveGroupIds array, or both. Defaults to active.
+        required: false
+        description: When a groupId is passed, this determines whether we look in the activeGroupIds array, inactiveGroupIds array, or both. Defaults to active.
+        name: leadStatusInGroup
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of leads that match the query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Lead'
+                    description: List of leads that match the specified filter.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Update Leads
+      description: Perform the specified operations on the specified leads.
+      tags:
+      - Leads
+      requestBody:
+        description: The details of the lead and operation being performed.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Lead ID
+                operation:
+                  oneOf:
+                  - $ref: '#/components/schemas/MakeActiveInGroupOperation'
+                  - $ref: '#/components/schemas/MakeInactiveInGroupOperation'
+                  - $ref: '#/components/schemas/AttachLeadToIntegrationOperation'
+                  - $ref: '#/components/schemas/ApplyTagOperation'
+                  - $ref: '#/components/schemas/RemoveTagOperation'
+                  - $ref: '#/components/schemas/SetCustomFieldOperation'
+                  - $ref: '#/components/schemas/OptOutOperation'
+                  - $ref: '#/components/schemas/OptInOperation'
+                  discriminator:
+                    propertyName: type
+                    mapping:
+                      makeActiveInGroup: '#/components/schemas/MakeActiveInGroupOperation'
+                      makeInactiveInGroup: '#/components/schemas/MakeInactiveInGroupOperation'
+                      attachLeadToIntegration: '#/components/schemas/AttachLeadToIntegrationOperation'
+                      applyTag: '#/components/schemas/ApplyTagOperation'
+                      removeTag: '#/components/schemas/RemoveTagOperation'
+                      setCustomField: '#/components/schemas/SetCustomFieldOperation'
+                      optOut: '#/components/schemas/OptOutOperation'
+                      optIn: '#/components/schemas/OptInOperation'
+              required:
+              - id
+              - operation
+              additionalProperties: false
+      responses:
+        '204':
+          description: Returned on a successful operation. Check results with the associated GET endpoints.
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Upsert Lead
+      description: Creates a new lead or updates the existing lead in the organization with that phone number.
+      tags:
+      - Leads
+      requestBody:
+        description: 'The details of the lead being created. '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phoneNumber:
+                  type: string
+                  pattern: ^\+[1-9]\d{1,14}$|^\d{5,6}$
+                  description: The phone number of the lead. The combination of organizationId and phoneNumber represent a lead. Attempting to insert a new lead with these existing values will overwrite the existing lead.
+                organizationId:
+                  type: string
+                  description: The ID of the organization the lead belongs to. The combination of organizationId and phoneNumber represent a lead. Attempting to insert a new lead with these existing values will overwrite the existing lead.
+                activeGroupIds:
+                  type: array
+                  items:
+                    type: string
+                  description: The IDs of the groups to make the lead active in. The lead will also be added to the group if they are not already. Excluding a group from this array will not make a lead inactive in that group. Use inactiveGroupIds to perform that operation. All groups must belong to the same organization as the lead.
+                inactiveGroupIds:
+                  type: array
+                  items:
+                    type: string
+                  description: The IDs of the groups to make the lead inactive in. All groups must belong to the same organization as the lead and the lead must already belong to them. If a lead is not already part of a passed group, they will *not* be added and deactivated (This property is only useful during lead updates and not inserts and exists only due to the limitation where leads CANNOT be removed from groups).
+                customFields:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  description: The custom fields and associated values for the lead.
+                firstName:
+                  type: string
+                  description: The first name of the lead.
+                lastName:
+                  type: string
+                  description: The last name of the lead.
+                notes:
+                  type: string
+                  description: Notes about the lead.
+                followUp:
+                  type: string
+                  description: Follow up comments for the lead.
+                email:
+                  type: string
+                  description: The email of the lead.
+                postalCode:
+                  type: string
+                  description: The postal (AKA zip) code of the lead.
+                phoneNumberType:
+                  type: string
+                  enum:
+                  - mobile
+                  - landline
+                  - voip
+                  - invalid
+                  description: The type of phone number of the lead. Older leads or leads that have not been messaged recently may not have this data available.
+                tagIds:
+                  type: array
+                  items:
+                    type: string
+                  description: The IDs of the tags that have been applied to the lead.
+              required:
+              - phoneNumber
+              - organizationId
+              additionalProperties: false
+      responses:
+        '200':
+          description: Returns an updated lead and denotes the operation was an update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        '201':
+          description: Returns the created lead and denotes the operation was a creation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lead'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    MakeInactiveInGroupOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - makeInactiveInGroup
+          description: This operation will make the lead inactive in the specified group. Because deleting a lead from a group is not allowed since the lead has message history, the only way to stop a lead from receiving messages meant for a group is to make them inactive.
+        groupId:
+          type: string
+          description: The ID of the group to make the lead inactive in.
+      required:
+      - type
+      - groupId
+      additionalProperties: false
+    OptInOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - optIn
+          description: This operation will opt a lead back in to receiving messages from Hustle. If account sync is enabled, all other leads in the account with the same number will also be opted in.
+      required:
+      - type
+      additionalProperties: false
+    BbLuminateExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - bbluminate
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - '1.0'
+            constituentId:
+              type: string
+          required:
+          - version
+          - constituentId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    SetCustomFieldOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - setCustomField
+          description: This operation will set the value of a custom field on a lead.
+        customFieldName:
+          type: string
+          description: The label of the custom field to set. This must exist as a custom field in the organization.
+        value:
+          type: string
+          description: The value to set the custom field to.
+      required:
+      - type
+      - customFieldName
+      - value
+      additionalProperties: false
+    RemoveTagOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - removeTag
+          description: This operation will remove a tag form a lead.
+        tagId:
+          type: string
+          description: The ID of the tag to remove from the lead.
+      required:
+      - type
+      - tagId
+      additionalProperties: false
+    EvertrueExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - evertrue
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - '1.0'
+            remoteId:
+              type: string
+          required:
+          - version
+          - remoteId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    SalesforceExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - salesforce
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - '41.0'
+            salesforceObjectType:
+              type: string
+            salesforceObjectId:
+              type: string
+          required:
+          - version
+          - salesforceObjectType
+          - salesforceObjectId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    VanMyVotersExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - van-myvoters
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - v4
+            vanId:
+              type: string
+            vanPhoneId:
+              type: number
+          required:
+          - version
+          - vanId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    Lead:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the lead.
+        type:
+          type: string
+          enum:
+          - lead
+          description: The type of object the attached ID corresponds to.
+        phoneNumber:
+          type: string
+          pattern: ^\+[1-9]\d{1,14}$|^\d{5,6}$
+          description: The phone number of the lead. The combination of organizationId and phoneNumber represent a lead. Attempting to insert a new lead with these existing values will overwrite the existing lead.
+        organizationId:
+          type: string
+          description: The ID of the organization the lead belongs to. The combination of organizationId and phoneNumber represent a lead. Attempting to insert a new lead with these existing values will overwrite the existing lead.
+        activeGroupIds:
+          type: array
+          items:
+            type: string
+          description: The IDs of the groups the lead belongs to where they are still active.
+        inactiveGroupIds:
+          type: array
+          items:
+            type: string
+          description: The IDs of the groups the lead belongs to where the lead is inactive. Because deleting a lead from a group is not allowed, the only way to stop a lead from receiving messages meant for a group is to make them inactive.
+        customFields:
+          type: object
+          additionalProperties:
+            type: string
+          description: The custom fields and associated values for the lead.
+        firstName:
+          type: string
+          description: The first name of the lead.
+        lastName:
+          type: string
+          description: The last name of the lead.
+        notes:
+          type: string
+          description: Notes about the lead.
+        followUp:
+          type: string
+          description: Follow up comments for the lead.
+        email:
+          type: string
+          description: The email of the lead.
+        postalCode:
+          type: string
+          description: The postal (AKA zip) code of the lead.
+        phoneNumberType:
+          type: string
+          enum:
+          - mobile
+          - landline
+          - voip
+          - invalid
+          description: The type of phone number of the lead. Older leads or leads that have not been messaged recently may not have this data available.
+        tagIds:
+          type: array
+          items:
+            type: string
+          description: The IDs of the tags that have been applied to the lead.
+        globalOptedOut:
+          type: boolean
+          description: Whether or not the lead has opted out of all messages. If this is true, the lead will not receive any messages.
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the agent was created.
+      required:
+      - id
+      - type
+      - phoneNumber
+      - organizationId
+      - activeGroupIds
+      - inactiveGroupIds
+      - customFields
+      - tagIds
+      - globalOptedOut
+      - createdAt
+      additionalProperties: false
+      description: A lead represents someone that messages and calls are sent to.
+    OptOutOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - optOut
+          description: This operation will opt a lead out of receiving messages from Hustle. If account sync is enabled, all other leads in the account with the same number will also be opted out.
+        tagId:
+          type: string
+          description: The ID of the tag to apply to the lead when opting them out. This must be an OptOut tag.
+      required:
+      - type
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+    AttachLeadToIntegrationOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - attachLeadToIntegration
+          description: This operation will attach a lead in Hustle to a lead (or similar object) in an integration.
+        integrationId:
+          type: string
+          description: The ID of the integration to attach the lead to.
+        external:
+          oneOf:
+          - $ref: '#/components/schemas/VanExternalLeadSchema'
+          - $ref: '#/components/schemas/VanMyVotersExternalLeadSchema'
+          - $ref: '#/components/schemas/EvertrueExternalLeadSchema'
+          - $ref: '#/components/schemas/SalesforceExternalLeadSchema'
+          - $ref: '#/components/schemas/BbLuminateExternalLeadSchema'
+          discriminator:
+            propertyName: integrationType
+            mapping:
+              van: '#/components/schemas/VanExternalLeadSchema'
+              van-myvoters: '#/components/schemas/VanMyVotersExternalLeadSchema'
+              evertrue: '#/components/schemas/EvertrueExternalLeadSchema'
+              salesforce: '#/components/schemas/SalesforceExternalLeadSchema'
+              bbluminate: '#/components/schemas/BbLuminateExternalLeadSchema'
+      required:
+      - type
+      - integrationId
+      - external
+      additionalProperties: false
+    VanExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - van
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - v4
+            vanId:
+              type: string
+            vanPhoneId:
+              type: number
+          required:
+          - version
+          - vanId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    ApplyTagOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - applyTag
+          description: This operation will attach a tag in an organization to a lead in that same organization.
+        tagId:
+          type: string
+          description: The ID of the tag to apply to the lead.
+      required:
+      - type
+      - tagId
+      additionalProperties: false
+    MakeActiveInGroupOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - makeActiveInGroup
+          description: This operation will make the lead active in the group and add the lead to a specified group if they are not already a part of it. This is a permanent addition since these leads have message history and other auditing requirements that make them impossible to permanently delete. The only way to stop texting a lead in a group is to make them inactive using the MakeInactiveInGroup operation.
+        groupId:
+          type: string
+          description: The ID of the group to reactivate the lead in or add the lead to.
+      required:
+      - type
+      - groupId
+      additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

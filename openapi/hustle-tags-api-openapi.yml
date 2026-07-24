@@ -1,0 +1,263 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Tags API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Tags
+paths:
+  /tags:
+    get:
+      summary: Get Tags
+      description: Get a list of tags scoped by query parameters.
+      tags:
+      - Tags
+      parameters:
+      - schema:
+          type: string
+          description: Tag ID
+        required: false
+        description: Tag ID
+        name: id
+        in: query
+      - schema:
+          type: string
+          description: Tag name. This is not a partial or fuzzy match but looks for an exact match of the tag name.
+        required: false
+        description: Tag name. This is not a partial or fuzzy match but looks for an exact match of the tag name.
+        name: name
+        in: query
+      - schema:
+          type: string
+          description: Organization ID
+        required: false
+        description: Organization ID
+        name: organizationId
+        in: query
+      - schema:
+          type: string
+          enum:
+          - LEAD_PROFILES
+          - OPT_OUT
+          - NEVER
+          description: "The context in which an agent can see and collect tags. \nLEAD_PROFILES: Agents will be able to see these while sending messages and use them to collect info about contacts. \nOPT_OUT: Specifically for opt-out reasons. Will only be displayed when agents opt out a contact. \nNEVER: Only for admins. Agents will never see this tag."
+        required: false
+        description: "The context in which an agent can see and collect tags. \nLEAD_PROFILES: Agents will be able to see these while sending messages and use them to collect info about contacts. \nOPT_OUT: Specifically for opt-out reasons. Will only be displayed when agents opt out a contact. \nNEVER: Only for admins. Agents will never see this tag."
+        name: agentVisibility
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of tags.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                    description: List of tags matching the query.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create Tag
+      description: Create a new tag.
+      tags:
+      - Tags
+      requestBody:
+        description: The details of the tag being created.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the tag
+                organizationId:
+                  type: string
+                  description: The organization this tag belongs to.
+                agentVisibility:
+                  type: string
+                  enum:
+                  - LEAD_PROFILES
+                  - OPT_OUT
+                  - NEVER
+                  description: "The context in which an agent can see and collect tags. \nLEAD_PROFILES: Agents will be able to see these while sending messages and use them to collect info about contacts. \nOPT_OUT: Specifically for opt-out reasons. Will only be displayed when agents opt out a contact. \nNEVER: Only for admins. Agents will never see this tag."
+              required:
+              - name
+              - organizationId
+              - agentVisibility
+              additionalProperties: false
+      responses:
+        '201':
+          description: Returns the created Tag.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                    description: List of tags matching the query.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The tag's ID.
+        type:
+          type: string
+          enum:
+          - tag
+          description: The type of this object.
+        name:
+          type: string
+          description: The tag name/label that shows up in the UI.
+        organizationId:
+          type: string
+          description: The organization this tag belongs to.
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the tag was created.
+        agentVisibility:
+          type: string
+          enum:
+          - LEAD_PROFILES
+          - OPT_OUT
+          - NEVER
+          description: "The context in which an agent can see and collect tags. \nLEAD_PROFILES: The default use. Agents will be able to see these while sending messages and use them to collect info about contacts. \nOPT_OUT: Specifically for opt-out reasons. Will only be displayed when agents opt out a contact. \nNEVER: Only for admins. Agents will never see this tag."
+      required:
+      - id
+      - type
+      - name
+      - createdAt
+      - agentVisibility
+      additionalProperties: false
+      description: A tag represents a label that can be applied to a lead.
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

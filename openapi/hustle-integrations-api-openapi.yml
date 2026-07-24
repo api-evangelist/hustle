@@ -1,0 +1,488 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Integrations API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Integrations
+paths:
+  /integrations:
+    patch:
+      summary: Update Integration
+      description: Update an instance of an integration in Hustle.
+      tags:
+      - Integrations
+      requestBody:
+        description: Expected information for integration to be updated.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                integrationId:
+                  type: string
+                  description: Id of the integration to be updated
+                operation:
+                  oneOf:
+                  - $ref: '#/components/schemas/PDIPatchIntegration'
+                  - $ref: '#/components/schemas/VanPatchIntegration'
+                  - $ref: '#/components/schemas/VanMyVotersPatchIntegration'
+                  discriminator:
+                    propertyName: type
+                    mapping:
+                      updatePDICredentials: '#/components/schemas/PDIPatchIntegration'
+                      updateVANCredentials: '#/components/schemas/VanPatchIntegration'
+                      updateVANMyVotersCredentials: '#/components/schemas/VanMyVotersPatchIntegration'
+              required:
+              - integrationId
+              - operation
+              additionalProperties: false
+      responses:
+        '201':
+          description: Returns the integration that was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create Integration
+      description: Create an instance of an integration in Hustle.
+      tags:
+      - Integrations
+      requestBody:
+        description: Expected information for integration to be created.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organizationId:
+                  type: string
+                  description: Owning Organization ID.
+                integration:
+                  oneOf:
+                  - $ref: '#/components/schemas/PDICreateIntegration'
+                  - $ref: '#/components/schemas/VanCreateIntegration'
+                  - $ref: '#/components/schemas/VanMyVotersCreateIntegration'
+                  discriminator:
+                    propertyName: type
+                    mapping:
+                      pdi: '#/components/schemas/PDICreateIntegration'
+                      van: '#/components/schemas/VanCreateIntegration'
+                      van_myvoters: '#/components/schemas/VanMyVotersCreateIntegration'
+              required:
+              - organizationId
+              - integration
+              additionalProperties: false
+      responses:
+        '201':
+          description: Returns the integration that was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Get Integrations
+      description: Get a list of integrations scoped by the query parameters.
+      tags:
+      - Integrations
+      parameters:
+      - schema:
+          type: string
+          description: Integration ID.
+        required: false
+        description: Integration ID.
+        name: id
+        in: query
+      - schema:
+          type: string
+          description: Owning Organization ID.
+        required: false
+        description: Owning Organization ID.
+        name: organizationId
+        in: query
+      - schema:
+          type: string
+          enum:
+          - bbluminate
+          - evertrue
+          - msdynamics
+          - pdi
+          - salesforce_managed_package
+          - van
+          - van_myvoters
+          - webhook
+          description: The type of integration.
+        required: false
+        description: The type of integration.
+        name: integrationType
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of integrations that match the query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Integration'
+                    description: List of organizations that match the specified filter.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Integration:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the integration.
+        type:
+          type: string
+          enum:
+          - integration
+          description: The type of object the attached ID corresponds to.
+        name:
+          type: string
+          description: The name of the integration.
+        integrationType:
+          type: string
+          enum:
+          - bbluminate
+          - evertrue
+          - msdynamics
+          - pdi
+          - salesforce_managed_package
+          - van
+          - van_myvoters
+          - webhook
+          description: The type of integration.
+        organizationId:
+          type: string
+          description: The ID of the organization the integration belongs to.
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the integration was created.
+      required:
+      - id
+      - type
+      - name
+      - integrationType
+      - organizationId
+      - createdAt
+      additionalProperties: false
+      description: An integration represents a connection between Hustle data and an external service (such as Salesforce, VAN, or PDI).
+    VanMyVotersPatchIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - updateVANMyVotersCredentials
+          description: This operation will update the credentials associated with an integration provided the credentials are valid.
+        credentials:
+          type: object
+          properties:
+            applicationName:
+              type: string
+              description: application name used to authenticate.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate.
+          required:
+          - applicationName
+          - apiKey
+          additionalProperties: false
+      required:
+      - type
+      - credentials
+      additionalProperties: false
+    PDICreateIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - pdi
+        name:
+          type: string
+          description: Name of the integration to be created
+        credentials:
+          type: object
+          properties:
+            username:
+              type: string
+              description: Username or email used to authenticate to the integration.
+            password:
+              type: string
+              description: Password used to authenticate to the integration.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate to PDI.
+          required:
+          - username
+          - password
+          - apiKey
+          additionalProperties: false
+      required:
+      - type
+      - name
+      - credentials
+      additionalProperties: false
+    VanMyVotersCreateIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - van_myvoters
+        name:
+          type: string
+          description: Name of the integration to be created
+        credentials:
+          type: object
+          properties:
+            applicationName:
+              type: string
+              description: application name used to authenticate.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate.
+          required:
+          - applicationName
+          - apiKey
+          additionalProperties: false
+        refKey:
+          type: string
+          description: Key used for processing of saved list.
+      required:
+      - type
+      - name
+      - credentials
+      additionalProperties: false
+    VanPatchIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - updateVANCredentials
+          description: This operation will update the credentials associated with an integration provided the credentials are valid.
+        credentials:
+          type: object
+          properties:
+            applicationName:
+              type: string
+              description: application name used to authenticate.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate.
+          required:
+          - applicationName
+          - apiKey
+          additionalProperties: false
+      required:
+      - type
+      - credentials
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+    PDIPatchIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - updatePDICredentials
+          description: This operation will update the credentials associated with an integration provided the credentials are valid.
+        credentials:
+          type: object
+          properties:
+            username:
+              type: string
+              description: Username or email used to authenticate to the integration.
+            password:
+              type: string
+              description: Password used to authenticate to the integration.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate to PDI.
+          required:
+          - username
+          - password
+          - apiKey
+          additionalProperties: false
+      required:
+      - type
+      - credentials
+      additionalProperties: false
+    VanCreateIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - van
+        name:
+          type: string
+          description: Name of the integration to be created
+        credentials:
+          type: object
+          properties:
+            applicationName:
+              type: string
+              description: application name used to authenticate.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate.
+          required:
+          - applicationName
+          - apiKey
+          additionalProperties: false
+        refKey:
+          type: string
+          description: Key used for processing of saved list.
+      required:
+      - type
+      - name
+      - credentials
+      additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

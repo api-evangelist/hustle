@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Access Token
+paths:
+  /oauth/token:
+    post:
+      summary: Create Access Token
+      description: Your server-side script or backend application must authenticate to create an access token. Access tokens are used to authorize requests that read and write Hustle resources. To authenticate use your Hustle provided client_id and client_secret to make a request following the <a href="https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/">OAuth2 client credentials flow.</a>
+      tags:
+      - Access Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                  - client_credentials
+                client_id:
+                  type: string
+                  format: email
+                client_secret:
+                  type: string
+              required:
+              - grant_type
+              - client_id
+              - client_secret
+              additionalProperties: false
+      responses:
+        '200':
+          description: Returns an OAuth access token. This token is used to authenticate requests to the Hustle API by appending it to the Authentication header as "Bearer token_goes_here".
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                    enum:
+                    - Bearer
+                  scope:
+                    type: string
+                  expires_in:
+                    type: number
+                required:
+                - access_token
+                - token_type
+                - scope
+                - expires_in
+                additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

@@ -1,0 +1,303 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Agents API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Agents
+paths:
+  /agents:
+    get:
+      summary: Get Agents
+      description: Get a list of agents scoped by the query parameters.
+      tags:
+      - Agents
+      parameters:
+      - schema:
+          type: string
+          description: Agent ID.
+        required: false
+        description: Agent ID.
+        name: id
+        in: query
+      - schema:
+          type: string
+          description: The ID of the Group the agent belongs to.
+        required: false
+        description: The ID of the Group the agent belongs to.
+        name: groupId
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of agents that match the query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Agent'
+                    description: List of agents that match the specified filter.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create Agent
+      description: Create a new agent. This will send an email invite to the agent being created if they are not already a Hustle user.
+      tags:
+      - Agents
+      requestBody:
+        description: 'The details of the agent being created. '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The display name of the agent.
+                fullName:
+                  type: string
+                  description: The full name of the agent.
+                email:
+                  type: string
+                  format: email
+                  description: The email of the agent - This will be used by the agent to log in.
+                groupId:
+                  type: string
+                  description: The ID of the group the agent will belong to.
+              required:
+              - name
+              - fullName
+              - email
+              - groupId
+              additionalProperties: false
+      responses:
+        '200':
+          description: Returns the created agent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /agents/{id}:
+    put:
+      summary: Update Agent
+      description: Update an existing agent.
+      tags:
+      - Agents
+      parameters:
+      - schema:
+          type: string
+          description: The ID of the agent to update.
+        required: true
+        description: The ID of the agent to update.
+        name: id
+        in: path
+      requestBody:
+        description: 'The details of the agent to update. '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The display name of the agent.
+                fullName:
+                  type: string
+                  description: The full name of the agent.
+                sendInvite:
+                  type: boolean
+                  description: Whether this update should send a new email invite to the agent.
+              required:
+              - name
+              - fullName
+              additionalProperties: false
+      responses:
+        '200':
+          description: Returns the updated agent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Agent'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Agent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the agent.
+        type:
+          type: string
+          enum:
+          - agent
+          description: The type of object the attached ID corresponds to.
+        name:
+          type: string
+          description: The display name of the agent.
+        fullName:
+          type: string
+          description: The full name of the agent.
+        phoneNumber:
+          type: string
+          pattern: ^\+[1-9]\d{1,14}$|^\d{5,6}$
+          description: The phone number of the agent.
+        organizationId:
+          type: string
+          description: The ID of the organization the agent belongs to.
+        groupId:
+          type: string
+          description: The ID of the group the agent belongs to.
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the agent was created.
+      required:
+      - id
+      - type
+      - name
+      - fullName
+      - organizationId
+      - groupId
+      - createdAt
+      additionalProperties: false
+      description: An agent represents someone that contacts leads on behalf of an organization.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

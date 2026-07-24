@@ -1,0 +1,221 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Custom Fields API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Custom Fields
+paths:
+  /custom_fields:
+    get:
+      summary: Get Custom Fields
+      description: Get a list of custom fields scoped by the query parameters.
+      tags:
+      - Custom Fields
+      parameters:
+      - schema:
+          type: string
+          description: Custom Field ID.
+        required: false
+        description: Custom Field ID.
+        name: id
+        in: query
+      - schema:
+          type: string
+          description: Organization ID. A lack of this property will look for all custom fields in the account, both account scoped and organization scoped.
+        required: false
+        description: Organization ID. A lack of this property will look for all custom fields in the account, both account scoped and organization scoped.
+        name: organizationId
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of agents that match the query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Custom Field'
+                    description: List of custom fields that match the specified filter.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create Custom Field
+      description: Create a new custom field belonging to the provided organization.
+      tags:
+      - Custom Fields
+      requestBody:
+        description: The details of the custom field being created.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: ^[_a-zA-Z]\w*$
+                  description: The name of the custom field.
+                agentVisible:
+                  type: boolean
+                  description: Whether the custom field is visible to agents.
+                organizationId:
+                  type: string
+                  description: The organization this custom field is scoped to.
+              required:
+              - name
+              - agentVisible
+              - organizationId
+              additionalProperties: false
+              description: Creates a new custom field.
+      responses:
+        '201':
+          description: Returns the created custom field.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Custom Field'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Custom Field:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the custom field.
+        type:
+          type: string
+          enum:
+          - custom_field
+          description: The type of object the attached ID corresponds to.
+        name:
+          type: string
+          pattern: ^[_a-zA-Z]\w*$
+          description: The name of the custom field.
+        agentVisible:
+          type: boolean
+          description: Whether the custom field is visible to agents.
+        organizationId:
+          type: string
+          description: The organization this custom field is scoped to (if any).
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the custom field was created.
+      required:
+      - id
+      - type
+      - name
+      - agentVisible
+      - createdAt
+      additionalProperties: false
+      description: A custom field is a custom property that can be attached to a lead.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html

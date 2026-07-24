@@ -1,0 +1,309 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Groups API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Groups
+paths:
+  /groups:
+    get:
+      summary: Get Groups
+      description: Get a list of groups scoped by the query parameters.
+      tags:
+      - Groups
+      parameters:
+      - schema:
+          type: string
+          description: Group ID.
+        required: false
+        description: Group ID.
+        name: id
+        in: query
+      - schema:
+          type: string
+          description: Owning organization ID.
+        required: false
+        description: Owning organization ID.
+        name: organizationId
+        in: query
+      - schema:
+          type: boolean
+          description: Whether or not the group is active.
+        required: false
+        description: Whether or not the group is active.
+        name: active
+        in: query
+      - schema:
+          type: string
+          description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        required: false
+        description: Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array.
+        name: cursor
+        in: query
+      - schema:
+          type: number
+          maximum: 1000
+          minimum: 1
+          description: Limit of items per page.
+        required: false
+        description: Limit of items per page.
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Returns a list of groups that match the query parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Group'
+                    description: List of groups that match the specified filter.
+                  cursor:
+                    type:
+                    - string
+                    - 'null'
+                    description: Cursor for start of next set of items. If there were no items to return with the last cursor you passed, this will return null.
+                  hasMore:
+                    type: boolean
+                    description: Whether there are more items to load past this cursor.
+                required:
+                - items
+                - cursor
+                - hasMore
+                additionalProperties: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create Group
+      description: Create a new group belonging to the provided organization.
+      tags:
+      - Groups
+      requestBody:
+        description: 'The details of the group being created. '
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the group.
+                description:
+                  type: string
+                  description: The user provided description of the group.
+                countryCode:
+                  type: string
+                  enum:
+                  - US
+                  - CA
+                  - PR
+                  description: The country code of the country the group is registered in.
+                  example: US
+                location:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      description: The human readable location of the group.
+                      example: Denver, CO, USA
+                    coordinates:
+                      type: object
+                      properties:
+                        lat:
+                          type: number
+                          description: The latitude of the group location.
+                          example: 39.7392358
+                        lng:
+                          type: number
+                          description: The longitude of the group location.
+                          example: -104.990251
+                      required:
+                      - lat
+                      - lng
+                      additionalProperties: false
+                      description: The coordinates that the group location is set to.
+                  required:
+                  - label
+                  - coordinates
+                  additionalProperties: false
+                  description: The location of the group. This is used to assign a timezone and enforce hours of operation.
+                organizationId:
+                  type: string
+                  description: The organization this group belongs to.
+              required:
+              - name
+              - countryCode
+              - location
+              - organizationId
+              additionalProperties: false
+              description: The details of the group being created.
+      responses:
+        '200':
+          description: Returns the created group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the group.
+        type:
+          type: string
+          enum:
+          - group
+          description: The type of object the attached ID corresponds to.
+        name:
+          type: string
+          description: The name of the group.
+        description:
+          type: string
+          description: The user provided description of the group.
+        countryCode:
+          type: string
+          enum:
+          - US
+          - CA
+          - PR
+          description: The country code of the country the group is registered in.
+          example: US
+        active:
+          type: boolean
+          description: Whether or not the group is active.
+        location:
+          type: object
+          properties:
+            label:
+              type: string
+              description: The human readable location of the group.
+              example: Denver, CO, USA
+            coordinates:
+              type: object
+              properties:
+                lat:
+                  type: number
+                  description: The latitude of the group location.
+                  example: 39.7392358
+                lng:
+                  type: number
+                  description: The longitude of the group location.
+                  example: -104.990251
+              required:
+              - lat
+              - lng
+              additionalProperties: false
+              description: The coordinates that the group location is set to.
+          required:
+          - label
+          - coordinates
+          additionalProperties: false
+          description: The location of the group.
+        organizationId:
+          type: string
+          description: The organization this group belongs to.
+        timezone:
+          type: string
+          description: The timezone of the group. Represented as an IANA Zone ID.
+          example: America/Denver
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the group was created.
+      required:
+      - id
+      - type
+      - name
+      - countryCode
+      - active
+      - organizationId
+      - timezone
+      - createdAt
+      additionalProperties: false
+      description: A group belongs to an Organization and organizes leads/agents/goals.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
+externalDocs:
+  description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
+  url: description.html
