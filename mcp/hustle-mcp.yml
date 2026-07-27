@@ -1,0 +1,81 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/hustle-openapi-original.json
+server:
+  name: hustle
+  transport: http
+  url: null
+note: >-
+  No official hosted/remote Hustle MCP server was found (no listing in the MCP
+  registry, npm @modelcontextprotocol, or Hustle docs). The tool list below is a
+  candidate derived one-to-one from the Public API v3 operations so an MCP
+  wrapper could be generated. The spec declares no operationIds, so tools are
+  keyed by HTTP method + path.
+tools:
+- name: create_access_token
+  description: Mint an OAuth2 client-credentials Bearer access token.
+  source_operation: POST /oauth/token
+- name: list_agents
+  description: List agents, filterable by id and groupId (cursor paginated).
+  source_operation: GET /agents
+- name: create_agent
+  description: Create an agent.
+  source_operation: POST /agents
+- name: update_agent
+  description: Update an agent by id.
+  source_operation: PUT /agents/{id}
+- name: list_custom_fields
+  description: List custom fields.
+  source_operation: GET /custom_fields
+- name: create_custom_field
+  description: Create a custom field.
+  source_operation: POST /custom_fields
+- name: list_groups
+  description: List groups, filterable by organizationId and active (cursor paginated).
+  source_operation: GET /groups
+- name: create_group
+  description: Create a group.
+  source_operation: POST /groups
+- name: list_integrations
+  description: List CRM integrations.
+  source_operation: GET /integrations
+- name: create_integration
+  description: Create a CRM integration.
+  source_operation: POST /integrations
+- name: update_integration
+  description: Update a CRM integration.
+  source_operation: PATCH /integrations
+- name: list_leads
+  description: List leads, filterable by phoneNumber, organizationId, groupId, status (cursor paginated).
+  source_operation: GET /leads
+- name: upsert_lead
+  description: Create or update a lead keyed on (organizationId, phoneNumber).
+  source_operation: POST /leads
+- name: patch_leads
+  description: Apply operations (tag, custom field, opt-in/out, activate) to leads.
+  source_operation: PATCH /leads
+- name: list_organizations
+  description: List organizations.
+  source_operation: GET /organizations
+- name: list_tags
+  description: List tags.
+  source_operation: GET /tags
+- name: create_tag
+  description: Create a tag.
+  source_operation: POST /tags
+- name: list_webhook_registrations
+  description: List webhook registrations.
+  source_operation: GET /webhook_registrations
+- name: create_webhook_registration
+  description: Register a webhook endpoint.
+  source_operation: POST /webhook_registrations
+- name: update_webhook_registration
+  description: Update a webhook registration by id.
+  source_operation: PUT /webhook_registrations/{id}
+- name: delete_webhook_registration
+  description: Delete a webhook registration by id.
+  source_operation: DELETE /webhook_registrations/{id}
+- name: mock_webhook_event
+  description: Send a mock event to test a webhook receiver.
+  source_operation: POST /webhook_registrations/mock_event

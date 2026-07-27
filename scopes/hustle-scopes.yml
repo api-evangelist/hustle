@@ -1,0 +1,19 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hustle-openapi-original.json
+docs: https://api.hustle.com/v3/docs/
+schemes:
+- name: OAuth2ClientCredentials
+  source: openapi/hustle-openapi-original.json
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.hustle.com/v3/oauth/token
+scopes: []
+notes: >-
+  The Hustle Public API uses the OAuth2 client-credentials flow and returns a
+  `scope` string on the token response, but the spec does not declare a
+  components.securitySchemes.flows.clientCredentials.scopes map and no
+  per-operation `security[]` scope requirements are present. No enumerable scope
+  values are published in the OpenAPI, so the derived scope list is empty by
+  design (absence is valid data, not a gap to fabricate). Access is governed by
+  the credentials issued to the client rather than a documented scope catalog.

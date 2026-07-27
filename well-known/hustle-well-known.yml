@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: live probes of /.well-known/* on api.hustle.com and hustle.com
+hosts:
+- host: https://api.hustle.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://hustle.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+notes: >-
+  No /.well-known discovery documents are published on either the API host or
+  the marketing host. Absence recorded as valid data; no raw files saved.

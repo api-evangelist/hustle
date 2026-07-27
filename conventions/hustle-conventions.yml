@@ -1,0 +1,57 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hustle-openapi-original.json
+docs: https://api.hustle.com/v3/docs/
+authentication:
+  style: oauth2-client-credentials
+  header: 'Authorization: Bearer <access_token>'
+  token_endpoint: https://api.hustle.com/v3/oauth/token
+  ref: authentication/hustle-authentication.yml
+idempotency:
+  supported: true
+  mechanism: >-
+    Lead ingestion is idempotent by natural key. POST /leads is an "Upsert Lead"
+    operation keyed on the (organizationId, phoneNumber) pair: inserting a lead
+    whose pair already exists overwrites/updates the existing record and returns
+    200, while a genuinely new pair returns 201. This natural-key upsert is the
+    API's documented idempotency contract; there is no separate Idempotency-Key
+    header.
+  scope: POST /leads (upsert by organizationId + phoneNumber)
+  evidence: >-
+    Spec summary "Upsert Lead"; description "Creates a new lead or updates the
+    existing lead in the organization with that phone number." 200 = updated
+    existing, 201 = created new. The phoneNumber schema note states the
+    combination of organizationId and phoneNumber represents a lead and that
+    inserting existing values overwrites the existing lead.
+pagination:
+  style: cursor
+  request_params:
+    cursor: Opaque cursor marking the start of the next page.
+    limit: Maximum number of items to return.
+  response_fields:
+    items: Array of resources for the current page.
+    cursor: Cursor for the next page; null when no further items remain.
+    hasMore: Boolean indicating whether more items exist past this cursor.
+  applies_to: [GET /agents, GET /groups, GET /leads]
+filtering:
+  detail: >-
+    List endpoints accept resource-scoped query filters, e.g. GET /leads
+    supports id, phoneNumber, organizationId, groupId, and leadStatusInGroup;
+    GET /agents supports id and groupId; GET /groups supports id,
+    organizationId, and active.
+versioning:
+  scheme: uri-path
+  current: v3
+  base: https://api.hustle.com/v3
+error_envelope:
+  media_type: application/json
+  schema: ErrorResponse
+  ref: errors/hustle-problem-types.yml
+webhooks:
+  supported: true
+  signature: HMAC (secretForHMAC) signed events
+  ref: asyncapi/hustle-webhooks.yml
+rate_limiting:
+  documented: false
+  note: No rate-limit headers or policy are declared in the OpenAPI.
+lifecycle_ref: lifecycle/hustle-lifecycle.yml

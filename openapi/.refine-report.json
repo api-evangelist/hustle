@@ -1,0 +1,30 @@
+{
+  "provider": "hustle",
+  "sources": [
+    "hustle-access-token-api-openapi.yml",
+    "hustle-agents-api-openapi.yml",
+    "hustle-custom-fields-api-openapi.yml",
+    "hustle-groups-api-openapi.yml",
+    "hustle-integrations-api-openapi.yml",
+    "hustle-leads-api-openapi.yml",
+    "hustle-organizations-api-openapi.yml",
+    "hustle-tags-api-openapi.yml",
+    "hustle-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "hustle-access-token-api-openapi.yml",
+    "hustle-agents-api-openapi.yml",
+    "hustle-custom-fields-api-openapi.yml",
+    "hustle-groups-api-openapi.yml",
+    "hustle-integrations-api-openapi.yml",
+    "hustle-leads-api-openapi.yml",
+    "hustle-organizations-api-openapi.yml",
+    "hustle-tags-api-openapi.yml",
+    "hustle-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

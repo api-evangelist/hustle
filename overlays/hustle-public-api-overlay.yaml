@@ -1,0 +1,27 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Hustle Public API
+  version: 1.0.0
+extends: openapi/hustle-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 3
+    x-apievangelist-notes: >-
+      OAuth2 client-credentials, cursor pagination, HMAC-signed webhooks, and a
+      shared error envelope are well modeled. Gaps: no components.securitySchemes
+      block (auth is only in prose), no operationIds, and errors are custom JSON
+      rather than RFC 9457 problem+json.
+- target: $
+  update:
+    x-apievangelist-recommendations:
+    - Declare components.securitySchemes with an oauth2 clientCredentials flow and apply it via a top-level security[] requirement.
+    - Add unique operationIds to every operation to make the spec generation- and agent-friendly.
+    - Adopt application/problem+json (RFC 9457) for the ErrorResponse envelope.
+    - Publish an enumerated scope catalog for the returned token `scope`.
+- target: $.info
+  update:
+    x-agent-ready:
+      idempotency: 'POST /leads upsert by (organizationId, phoneNumber)'
+      pagination: cursor/limit -> items/cursor/hasMore
+      webhooks: 'consentUpdate-v1, messageStatus-v1 (HMAC signed)'

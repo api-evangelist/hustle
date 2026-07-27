@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/hustle-openapi-original.json
+skills:
+- file: hustle-upsert-and-tag-lead.md
+  name: Upsert a Hustle lead and tag them
+  api: openapi/hustle-openapi-original.json
+  operations:
+  - POST /oauth/token
+  - POST /leads
+  - GET /tags
+  - POST /tags
+  - PATCH /leads
+- file: hustle-register-webhook.md
+  name: Register and verify a Hustle webhook
+  api: openapi/hustle-openapi-original.json
+  operations:
+  - POST /oauth/token
+  - POST /webhook_registrations
+  - POST /webhook_registrations/mock_event
+  - GET /webhook_registrations

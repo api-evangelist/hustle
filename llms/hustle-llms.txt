@@ -1,0 +1,32 @@
+# Hustle
+
+> Hustle is an employee-owned text, video, and voice communications platform that lets organizations engage audiences at scale — broadcast texting, peer-to-peer 1:1 conversational texting, video messaging (Clips and Stories), and an outbound dialer. It is used by nonprofits, education, commercial businesses, political campaigns, government, and labor unions. The Hustle Public API (v3) is a RESTful, OAuth2 client-credentials interface for managing agents, groups, leads, custom fields, tags, organizations, CRM integrations, and webhooks.
+
+## APIs
+
+- [Hustle Public API v3](https://api.hustle.com/v3/docs/): RESTful API for agents, groups, leads, custom fields, tags, organizations, integrations, and webhook registrations. Base URL https://api.hustle.com/v3.
+
+## Specs
+
+- [OpenAPI 3.1.0 (swagger.json)](https://api.hustle.com/v3/docs/swagger.json): The published spec for the Hustle Public API.
+
+## Authentication
+
+- OAuth2 client-credentials flow. POST https://api.hustle.com/v3/oauth/token with grant_type=client_credentials, client_id (email), and client_secret to receive a Bearer access token. Send it as `Authorization: Bearer <token>` on subsequent requests.
+
+## Conventions
+
+- Cursor pagination: pass `cursor` and `limit`; responses return `items`, `cursor`, and `hasMore`.
+- Idempotency: POST /leads is an upsert keyed on (organizationId, phoneNumber) — 200 on update, 201 on create.
+- Errors: custom JSON envelope `{ code, message, hustleErrorCode }`.
+- Webhooks: consentUpdate-v1 and messageStatus-v1 events, HMAC signed.
+
+## Docs
+
+- [API Documentation](https://api.hustle.com/v3/docs/)
+- [Help Center](https://help.hustle.com/hc/en-us)
+- [Security & Compliance](https://hustle.com/security/) (SOC 2, CSA STAR)
+- [Status](https://status.hustle.com/)
+- [Pricing / Demo](https://hustle.com/pricing/)
+- [Terms and Conditions](https://hustle.com/terms-and-conditions/)
+- [Privacy Policy](https://hustle.com/privacy-policy/)

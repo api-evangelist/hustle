@@ -1,0 +1,77 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hustle-openapi-original.json
+summary: >-
+  Entity-relationship graph derived from the Hustle Public API OpenAPI schemas
+  and their id-reference fields. Organization is the top-level tenant scope;
+  agents, groups, leads, custom fields, tags, and integrations all belong to an
+  organization. Webhook registrations are account/organization scoped.
+entities:
+- name: Organization
+  schema: Organization
+  root: true
+  description: Top-level account scope that owns all other resources.
+- name: Agent
+  schema: Agent
+  description: A user who sends and manages conversations, scoped to a group.
+- name: Group
+  schema: Group
+  description: A container of leads/agents within an organization.
+- name: Lead
+  schema: Lead
+  description: A contact, uniquely identified by (organizationId, phoneNumber).
+- name: CustomField
+  schema: Custom Field
+  description: An organization-scoped custom attribute applied to leads.
+- name: Tag
+  schema: Tag
+  description: An organization-scoped label applied to leads.
+- name: Integration
+  schema: Integration
+  description: A CRM/data integration (PDI, VAN, VAN MyVoters, etc.).
+- name: WebhookRegistration
+  schema: WebhookRegistration
+  description: A subscriber webhook endpoint with consent/message-status config.
+relationships:
+- from: Agent
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: Agent
+  to: Group
+  kind: belongs_to
+  via: groupId
+- from: Group
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: Lead
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: CustomField
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: Tag
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: Integration
+  to: Organization
+  kind: belongs_to
+  via: organizationId
+- from: Organization
+  to: Lead
+  kind: has_many
+  via: organizationId
+- from: Organization
+  to: Group
+  kind: has_many
+  via: organizationId
+- from: Group
+  to: Agent
+  kind: has_many
+  via: groupId
+natural_keys:
+  Lead: [organizationId, phoneNumber]

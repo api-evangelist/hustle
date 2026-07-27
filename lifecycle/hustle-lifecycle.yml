@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: searched
+source: https://api.hustle.com/v3/docs/
+versioning:
+  scheme: uri-path
+  current: v3
+  base: https://api.hustle.com/v3
+  docs: https://api.hustle.com/v3/docs/
+status_page: https://status.hustle.com/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+sla:
+  url: null
+  note: No public SLA / uptime target published on the developer surface.
+deprecated_operations: []
+notes: >-
+  status.hustle.com resolves (HTTP 200) as a Hustle-subdomain status page. The
+  API is versioned in the URI path (v3). No deprecation policy or SLA is
+  published on the public developer surface.

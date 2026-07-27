@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hustle-openapi-original.json
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: Published OpenAPI 3.1.0 document at https://api.hustle.com/v3/docs/swagger.json
+- id: oauth2-client-credentials
+  conforms: true
+  evidence: POST /oauth/token implements the OAuth2 client_credentials grant returning a Bearer token
+- id: oidc
+  conforms: false
+  evidence: No OpenID Connect discovery or id_token; client-credentials only
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom ErrorResponse (application/json), not application/problem+json
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints use cursor/limit params with items/cursor/hasMore envelope
+- id: webhook-hmac-signing
+  conforms: true
+  evidence: Webhook registrations carry an HMAC signing secret (secretForHMAC) for event verification
+- id: e164-phone-numbers
+  conforms: true
+  evidence: Lead phoneNumber validated against E.164 pattern (^\+[1-9]\d{1,14}$ or short code)
+- id: soc2
+  conforms: true
+  evidence: 'Hustle is SOC 2 certified to AICPA Trust Service Principles (https://hustle.com/security/)'
+- id: csa-star
+  conforms: true
+  evidence: 'CSA STAR registration; CAIQ at https://cloudsecurityalliance.org/registry/hustle-inc/'

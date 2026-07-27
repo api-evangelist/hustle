@@ -1,0 +1,46 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/hustle-openapi-original.json
+format: custom-json
+envelope:
+  media_type: application/json
+  schema: ErrorResponse
+  fields:
+    code: Numeric error code; usually mirrors the HTTP status code.
+    message: Human-readable message detailing the error.
+    hustleErrorCode: >-
+      String code sometimes present (generally on 422 responses). Pass it to
+      Hustle support when the message is not descriptive enough to identify the
+      issue.
+  note: >-
+    Errors are NOT RFC 9457 problem+json; Hustle returns a custom ErrorResponse
+    object with application/json. The `hustleErrorCode` field is provider-
+    specific and not enumerated in the spec.
+problems:
+- status: 400
+  title: Bad Request
+  schema: ErrorResponse
+- status: 401
+  title: Unauthorized
+  schema: ErrorResponse
+  remediation: >-
+    Access token missing, expired, or invalid. Re-authenticate via
+    POST /oauth/token to mint a fresh Bearer token.
+- status: 404
+  title: Not Found
+  schema: ErrorResponse
+- status: 422
+  title: Unprocessable Entity
+  schema: ErrorResponse
+  remediation: >-
+    Validation failed. Inspect `message` and the `hustleErrorCode` field; the
+    latter can be shared with Hustle support for diagnosis.
+- status: 500
+  title: Internal Server Error
+  schema: ErrorResponse
+applies_to:
+  operations: all
+  detail: >-
+    Every resource operation (Agents, Custom Fields, Groups, Integrations,
+    Leads, Organizations, Tags, Webhooks) declares 400/401/404/422/500
+    responses using the shared ErrorResponse schema.

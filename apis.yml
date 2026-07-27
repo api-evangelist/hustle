@@ -1,9 +1,32 @@
 aid: hustle
 name: Hustle
-description: 'Hustle is a company surfaced as a portfolio company of gv, insight-partners and added to
-  the API Evangelist network as a stub for enrichment. Sector: enterprise. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Hustle is an employee-owned text, video, and voice communications platform
+  that lets organizations engage audiences at scale from a single interface.
+  It combines broadcast texting, peer-to-peer 1:1 conversational texting, video
+  messaging (Hustle Clips, Personalized Clips, and Hustle Stories), and an
+  outbound dialer, and is used by nonprofits, educational institutions,
+  commercial businesses, political campaigns, government agencies, and labor
+  unions to reach people over the channels they already use. The Hustle Public
+  API (v3) exposes a RESTful, OAuth2 client-credentials interface for managing
+  agents, groups, leads, custom fields, tags, organizations, CRM integrations,
+  and webhook registrations. Hustle was added to the API Evangelist network as a
+  portfolio company of GV and Insight Partners and enriched from its public
+  developer surface.
 url: https://raw.githubusercontent.com/api-evangelist/hustle/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://hustle.com/wp-content/uploads/2026/05/cropped-ko-Hustle-10-logo-1200px-wide-1.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -13,16 +36,329 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
 - Enterprise
-apis: []
+- Messaging
+- SMS
+- Peer-to-Peer Texting
+- Communications
+- Marketing
+- Civic Engagement
+- Webhooks
+- OAuth
+apis:
+- aid: hustle:hustle-access-token-api
+  name: Hustle Access Token API
+  description: The Access Token API from Hustle — 1 operation(s) for access token.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Access Token
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-access-token-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-agents-api
+  name: Hustle Agents API
+  description: The Agents API from Hustle — 2 operation(s) for agents.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-agents-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-custom-fields-api
+  name: Hustle Custom Fields API
+  description: The Custom Fields API from Hustle — 1 operation(s) for custom fields.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-custom-fields-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-groups-api
+  name: Hustle Groups API
+  description: The Groups API from Hustle — 1 operation(s) for groups.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-groups-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-integrations-api
+  name: Hustle Integrations API
+  description: The Integrations API from Hustle — 1 operation(s) for integrations.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-integrations-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-leads-api
+  name: Hustle Leads API
+  description: The Leads API from Hustle — 1 operation(s) for leads.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Leads
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-leads-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-organizations-api
+  name: Hustle Organizations API
+  description: The Organizations API from Hustle — 1 operation(s) for organizations.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-organizations-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-tags-api
+  name: Hustle Tags API
+  description: The Tags API from Hustle — 1 operation(s) for tags.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-tags-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+- aid: hustle:hustle-webhooks-api
+  name: Hustle Webhooks API
+  description: The Webhooks API from Hustle — 3 operation(s) for webhooks.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-webhooks-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: WellKnown
+    url: well-known/hustle-well-known.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/hustle-agentic-access.yml
 - type: Website
-  url: http://hustle.com
+  url: https://hustle.com
+- type: DeveloperPortal
+  url: https://api.hustle.com/v3/docs/
+- type: Documentation
+  url: https://api.hustle.com/v3/docs/
+- type: APIReference
+  url: https://api.hustle.com/v3/docs/
+- type: HelpCenter
+  url: https://help.hustle.com/hc/en-us
+- type: SignUp
+  url: https://web.hustle.com/
+- type: Login
+  url: https://admin.hustle.com/
+- type: Pricing
+  url: https://hustle.com/pricing/
+- type: TermsOfService
+  url: https://hustle.com/terms-and-conditions/
+- type: PrivacyPolicy
+  url: https://hustle.com/privacy-policy/
+- type: StatusPage
+  url: https://status.hustle.com/
+- type: TrustCenter
+  url: security/hustle-trust-center.yml
+- type: Compliance
+  url: https://hustle.com/security/
+- type: DomainSecurity
+  url: security/hustle-domain-security.yml
+- type: Lifecycle
+  url: lifecycle/hustle-lifecycle.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

@@ -1,0 +1,40 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/hustle-openapi-original.json
+docs: https://api.hustle.com/v3/docs/
+spec_type: Webhooks
+summary: >-
+  Hustle delivers outbound webhook events to a subscriber-registered targetUrl.
+  Webhook registrations are managed via the /webhook_registrations endpoints and
+  events are HMAC-signed (a per-registration secret enables signature
+  verification; the secret is never returned by the API). A mock-event endpoint
+  is provided to exercise a subscriber's receiver.
+management:
+  register: POST /webhook_registrations
+  list: GET /webhook_registrations
+  update: PUT /webhook_registrations/{id}
+  delete: DELETE /webhook_registrations/{id}
+  mock: POST /webhook_registrations/mock_event
+delivery:
+  target: subscriber targetUrl (https URI)
+  signing: HMAC signature; secretForHMAC indicates an active signing secret
+  secret_handling: >-
+    The signing secret is never returned by the API; if lost it must be reset.
+event_types:
+- type: consentUpdate-v1
+  description: >-
+    Sent when a lead updates their consent status to opt in or opt out of
+    communications. Config supports includeOptIn / includeOptOut toggles.
+  scopes: [organizations, account]
+- type: messageStatus-v1
+  description: >-
+    Sent when a message status changes (e.g., delivered, failed).
+  scopes: [organizations, account]
+scopes:
+  organizations: WebhookOrganizationsScopeV1 — scoped to specific organizations
+  account: WebhookAccountScopeV1 — scoped to the whole account
+notes: >-
+  Hustle publishes no standalone AsyncAPI document; the event surface is fully
+  described by the webhook schemas in the OpenAPI (WebhookConfig oneOf
+  ConsentUpdateV1Config / MessageStatusV1Config). Captured here as a Webhooks
+  catalog rather than fabricating an AsyncAPI spec.
