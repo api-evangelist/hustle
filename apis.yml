@@ -325,6 +325,12 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgentSkill
+  url: skills/hustle-register-webhook.md
+- type: MCPServer
+  url: mcp/hustle-mcp.yml
+- type: Overlay
+  url: overlays/hustle-public-api-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/hustle-agentic-access.yml
 - type: Website
