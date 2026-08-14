@@ -10,7 +10,7 @@ description: >-
   unions to reach people over the channels they already use. The Hustle Public
   API (v3) exposes a RESTful, OAuth2 client-credentials interface for managing
   agents, groups, leads, custom fields, tags, organizations, CRM integrations,
-  and webhook registrations. Hustle was added to the API Evangelist network as a
+  message delivery status, and webhook registrations. Hustle was added to the API Evangelist network as a
   portfolio company of GV and Insight Partners and enriched from its public
   developer surface.
 url: https://raw.githubusercontent.com/api-evangelist/hustle/refs/heads/main/apis.yml
@@ -32,11 +32,11 @@ x-source: vc-portfolio
 x-backed-by:
 - gv
 - insight-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: full public developer surface harvested (OpenAPI 3.1, 23 operations, documented rate limits, published pricing, first-party client)
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-19'
+modified: '2026-08-13'
 tags:
 - Company
 - Enterprise
@@ -75,8 +75,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-agents-api
@@ -105,8 +105,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-custom-fields-api
@@ -135,8 +135,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-groups-api
@@ -165,8 +165,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-integrations-api
@@ -195,8 +195,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-leads-api
@@ -225,10 +225,42 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
+- aid: hustle:hustle-messages-api
+  name: Hustle Messages API
+  description: The Messages API from Hustle — 1 operation(s) for message delivery status.
+  humanURL: https://api.hustle.com/v3/docs/
+  baseURL: https://api.hustle.com/v3
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/hustle-messages-api-openapi.yml
+  - type: Authentication
+    url: authentication/hustle-authentication.yml
+  - type: OAuthScopes
+    url: scopes/hustle-scopes.yml
+  - type: Webhooks
+    url: asyncapi/hustle-webhooks.yml
+  - type: ErrorCatalog
+    url: errors/hustle-problem-types.yml
+  - type: Conventions
+    url: conventions/hustle-conventions.yml
+  - type: Idempotency
+    url: conventions/hustle-conventions.yml
+  - type: DataModel
+    url: data-model/hustle-data-model.yml
+  - type: Conformance
+    url: conformance/hustle-conformance.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
+  - type: LLMsTxt
+    url: llms/hustle-llms.txt
+  - type: AgentSkill
+    url: skills/hustle-track-message-delivery.md
 - aid: hustle:hustle-organizations-api
   name: Hustle Organizations API
   description: The Organizations API from Hustle — 1 operation(s) for organizations.
@@ -255,8 +287,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-tags-api
@@ -285,8 +317,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 - aid: hustle:hustle-webhooks-api
@@ -315,8 +347,8 @@ apis:
     url: data-model/hustle-data-model.yml
   - type: Conformance
     url: conformance/hustle-conformance.yml
-  - type: WellKnown
-    url: well-known/hustle-well-known.yml
+  - type: RateLimits
+    url: rate-limits/hustle-rate-limits.yml
   - type: LLMsTxt
     url: llms/hustle-llms.txt
 maintainers:
@@ -363,8 +395,36 @@ common:
   url: security/hustle-domain-security.yml
 - type: Lifecycle
   url: lifecycle/hustle-lifecycle.yml
+- type: AgentSkill
+  url: skills/hustle-upsert-and-tag-lead.md
+- type: AgentSkill
+  url: skills/hustle-track-message-delivery.md
+- type: Packages
+  url: packages/hustle-packages.yml
+- type: SDKs
+  url: packages/hustle-packages.yml
+- type: Plans
+  url: plans/hustle-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/hustle-rate-limits.yml
+- type: ChangeLog
+  url: changelog/hustle-changelog.yml
+- type: ChangeLog
+  url: https://api.hustle.com/v3/docs/description.html
+- type: GettingStarted
+  url: https://api.hustle.com/v3/docs/description.html
+- type: GitHubOrganization
+  url: https://github.com/Hustle
+- type: SourceCode
+  url: https://github.com/Hustle/hustle-public-api-samples
+- type: Blog
+  url: https://hustle.com/resources/
+- type: BlogRSS
+  url: https://hustle.com/feed/
+- type: AcceptableUsePolicy
+  url: https://hustle.com/acceptable-use-policy/
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 7
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
