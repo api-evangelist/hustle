@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hustle Public Access Token Organizations API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v3/organizations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of items per page."
+              }
+            ]
+          },
+          "docs": "Get a list of organizations scoped by the query parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

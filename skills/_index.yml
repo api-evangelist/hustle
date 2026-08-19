@@ -1,10 +1,10 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: generated
-source: openapi/hustle-openapi-original.json
+source: openapi/_original/hustle-openapi-original.json
 skills:
 - file: hustle-upsert-and-tag-lead.md
   name: Upsert a Hustle lead and tag them
-  api: openapi/hustle-openapi-original.json
+  api: openapi/hustle-leads-api-openapi.yml
   operations:
   - POST /oauth/token
   - POST /leads
@@ -13,9 +13,22 @@ skills:
   - PATCH /leads
 - file: hustle-register-webhook.md
   name: Register and verify a Hustle webhook
-  api: openapi/hustle-openapi-original.json
+  api: openapi/hustle-webhooks-api-openapi.yml
   operations:
   - POST /oauth/token
   - POST /webhook_registrations
   - POST /webhook_registrations/mock_event
   - GET /webhook_registrations
+- file: hustle-track-message-delivery.md
+  name: Track Hustle message delivery status
+  api: openapi/hustle-messages-api-openapi.yml
+  operations:
+  - POST /oauth/token
+  - POST /webhook_registrations
+  - GET /messages/{id}
+  - GET /webhook_registrations
+note: >-
+  Hustle publishes no AGENTS.md or provider-authored skills; these are generated
+  from the live Public API v3 OpenAPI. Every step is grounded in a path+method
+  that exists verbatim in openapi/_original/hustle-openapi-original.json — the
+  spec declares no operationIds, so operations are keyed by HTTP method + path.

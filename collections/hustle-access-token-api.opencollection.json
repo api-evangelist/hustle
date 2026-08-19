@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hustle Public Access Token API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Access Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v3/oauth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Your server-side script or backend application must authenticate to create an access token. Access tokens are used to authorize requests that read and write Hustle resources. To authenticate use your Hustle provided client_id and client_secret to make a request following the <a href=\"https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/\">OAuth2 client credentials flow.</a>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

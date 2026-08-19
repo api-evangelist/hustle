@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hustle Public Access Token Custom Fields API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom Fields",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Custom Fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v3/custom_fields",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Custom Field ID."
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID. A lack of this property will look for all custom fields in the account, both account scoped and organization scoped."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of items per page."
+              }
+            ]
+          },
+          "docs": "Get a list of custom fields scoped by the query parameters."
+        },
+        {
+          "info": {
+            "name": "Create Custom Field",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v3/custom_fields",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new custom field belonging to the provided organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

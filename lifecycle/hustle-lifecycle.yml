@@ -1,12 +1,33 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: searched
-source: https://api.hustle.com/v3/docs/
+source: https://api.hustle.com/v3/docs/description.html
 versioning:
   scheme: uri-path
   current: v3
   base: https://api.hustle.com/v3
   docs: https://api.hustle.com/v3/docs/
+  prior_versions:
+  - {version: v2, docs: https://api.hustle.com/v2/docs, http_status: 200, checked: '2026-08-13'}
+  - {version: v1, docs: https://api.hustle.com/v1/docs, http_status: 200, checked: '2026-08-13'}
+  note: >-
+    Both prior major versions are still documented and reachable with no
+    announced sunset date. Hustle publishes a v2→v3 endpoint mapping spreadsheet
+    in place of a deprecation timetable.
+release_notes:
+  url: https://api.hustle.com/v3/docs/description.html
+  dated: false
+  ref: changelog/hustle-changelog.yml
 status_page: https://status.hustle.com/
+status_page_evidence:
+  url: https://status.hustle.com/
+  http_status: 200
+  checked: '2026-08-13'
+  note: >-
+    Real hosted status-page product served from S3/CloudFront under Hustle's own
+    subdomain (title "Status Pages Site", JS-rendered SPA bundle). Incident
+    history is client-rendered, and the Statuspage-style JSON/RSS endpoints
+    (/api/v2/summary.json, /history.rss) return 403, so the incident feed is not
+    machine-readable.
 deprecation:
   policy_url: null
   sunset_header: false

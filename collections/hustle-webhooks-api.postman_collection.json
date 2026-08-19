@@ -1,0 +1,1480 @@
+{
+  "item": [
+    {
+      "id": "81020a52-c840-45d6-82c3-b963fd704ab9",
+      "name": "Webhooks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cb50d42c-90c2-4c85-a3f9-3430d13c0712",
+          "name": "Get Webhook Registrations",
+          "request": {
+            "name": "Get Webhook Registrations",
+            "description": {
+              "content": "Get a list of webhook registrations scoped by the query parameters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook_registrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Webhook registration ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "configType",
+                  "value": "<string>",
+                  "description": "Filter by webhook configuration type."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<number>",
+                  "description": "Limit of items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9a1caf17-63fe-41c1-abea-7bee5c097cae",
+              "name": "Returns a list of webhook registrations that match the query parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"string\",\n      \"type\": \"webhook_registration\",\n      \"targetUrl\": \"https://VBRlmfYmBDHBAFuxrOTJEi.ail5zlxsS2mt8cWR4611Ucbo\",\n      \"config\": {\n        \"type\": \"consentUpdate-v1\",\n        \"scope\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"includeOptOut\": true,\n        \"includeOptIn\": false\n      },\n      \"createdAt\": \"string\",\n      \"secretForHMAC\": true\n    },\n    {\n      \"id\": \"string\",\n      \"type\": \"webhook_registration\",\n      \"targetUrl\": \"http://hrrKSqJHZrgvKZOkS.ggceJ4GMxwHUt9Gzr2JhK+6rKXRovt2rqaTP2z6AOJr3u.,q4Y.170DzGrMZ\",\n      \"config\": {\n        \"type\": \"consentUpdate-v1\",\n        \"scope\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"includeOptOut\": false,\n        \"includeOptIn\": false\n      },\n      \"createdAt\": \"string\",\n      \"secretForHMAC\": true\n    }\n  ],\n  \"cursor\": \"string\",\n  \"hasMore\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23941e28-5779-4c0f-a3fd-c6b7dbb391fb",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f5cde08-b035-4d1a-979a-5758662f02b6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b34100ee-1f70-44f2-8448-f4a4c58a7453",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e21f4adc-a3e3-4ec0-a21e-c0cd0c82de74",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dce2d91-f051-475b-a570-413560a31d64",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "06bc870a-8136-4f1f-a767-24251a766cfc",
+          "name": "Create Webhook Registration",
+          "request": {
+            "name": "Create Webhook Registration",
+            "description": {
+              "content": "Create a new webhook registration to receive webhook events. For more information and documentation, see https://api.hustle.com/docs/webhooks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook_registrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"<string>\",\n    \"scope\": {\n      \"type\": \"<string>\",\n      \"organizationIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"includeOptOut\": \"<boolean>\",\n    \"includeOptIn\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b560bdec-8dc8-4cf7-b582-faf9fa951f2a",
+              "name": "Returns the created webhook registration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": false,\n    \"includeOptIn\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"webhook_registration\",\n  \"targetUrl\": \"https://Lz.rgnjD0x2AHsGUipplJTE6Z+gnpVYEVsBjwIgo8qAhJJ\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": false\n  },\n  \"createdAt\": \"string\",\n  \"secretForHMAC\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd338fcb-d04f-469f-b99b-02f8aa3a7610",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": false,\n    \"includeOptIn\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4696ce8e-af1f-455a-a4e5-03e6129274c2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": false,\n    \"includeOptIn\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c636c78-f7e0-42b7-8c66-ebf2b065cd3d",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": false,\n    \"includeOptIn\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a99eda1b-f631-499c-a631-fb7259380ca3",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": false,\n    \"includeOptIn\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2df8fe90-958f-4240-be55-a22db5307b34",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": false,\n    \"includeOptIn\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2364e4e4-2ad8-4ff6-b990-0d73182fc35d",
+          "name": "Update Webhook Registration",
+          "request": {
+            "name": "Update Webhook Registration",
+            "description": {
+              "content": "Update an existing webhook registration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook_registrations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the webhook registration to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"<string>\",\n    \"scope\": {\n      \"type\": \"<string>\",\n      \"organizationIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"includeOptOut\": \"<boolean>\",\n    \"includeOptIn\": \"<boolean>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a8d62349-3b6b-42ef-9a92-bd75e87a83ca",
+              "name": "Returns the updated webhook registration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"webhook_registration\",\n  \"targetUrl\": \"https://Lz.rgnjD0x2AHsGUipplJTE6Z+gnpVYEVsBjwIgo8qAhJJ\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": false\n  },\n  \"createdAt\": \"string\",\n  \"secretForHMAC\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e91d239-7986-4bf0-a5d5-6124497560c9",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2e03782-9852-4eb4-89a2-a865cb5ca22a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73efb4b5-de5a-4635-abe2-04b3ab611c5e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4eb8a842-e72b-4671-9a00-ac09f91a4718",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0246196-0a24-464a-9695-22ef1e64d8ee",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"targetUrl\": \"<uri>\",\n  \"secretForHMAC\": \"<string>\",\n  \"config\": {\n    \"type\": \"consentUpdate-v1\",\n    \"scope\": {\n      \"type\": \"organizations\",\n      \"organizationIds\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"includeOptOut\": true,\n    \"includeOptIn\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73b9f599-6a41-4e13-abe8-71f6fc4a6bbc",
+          "name": "Delete Webhook Registration",
+          "request": {
+            "name": "Delete Webhook Registration",
+            "description": {
+              "content": "Delete an existing webhook registration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook_registrations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The ID of the webhook registration to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04f547bb-9ab1-4ad2-a59f-e3b83765bfbd",
+              "name": "Returns confirmation of successful deletion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e943c1d5-d40d-490f-bf16-5c7e72f3a23b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6135b3d8-9aa5-4133-b655-c0b229fd2470",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a58814e3-12c5-413f-8987-4b6081f6eb27",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f9088f0-28a9-41c9-a347-b76740df2792",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c584804f-f9f0-458b-a112-5e6c808d72f9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The ID of the webhook registration to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 9762.101144890703,\n  \"message\": \"string\",\n  \"hustleErrorCode\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff741a9c-0e07-48bf-a2fb-b42826fab283",
+          "name": "Mock Webhook Event",
+          "request": {
+            "name": "Mock Webhook Event",
+            "description": {
+              "content": "Mock a webhook event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "webhook_registrations",
+                "mock_event"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"webhookRegistrationId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11e4db17-30bc-447c-8440-fecd1aafe65a",
+              "name": "Returns the mocked webhook event.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "webhook_registrations",
+                    "mock_event"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"webhookRegistrationId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"willPassValidation\": false,\n  \"accountId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ed7fb574-bf65-4551-b5e8-f67d03b08c32",
+    "name": "Hustle Public Access Token Webhooks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.",
+      "type": "text/plain"
+    }
+  }
+}

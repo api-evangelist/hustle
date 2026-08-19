@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hustle Public Access Token Integrations API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v3/integrations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Integration ID."
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "Owning Organization ID."
+              },
+              {
+                "name": "integrationType",
+                "value": "",
+                "type": "query",
+                "description": "The type of integration."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of items per page."
+              }
+            ]
+          },
+          "docs": "Get a list of integrations scoped by the query parameters."
+        },
+        {
+          "info": {
+            "name": "Create Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v3/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an instance of an integration in Hustle."
+        },
+        {
+          "info": {
+            "name": "Update Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/v3/integrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an instance of an integration in Hustle."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

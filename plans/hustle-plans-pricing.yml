@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: searched
+source: https://hustle.com/pricing/
+docs: https://hustle.com/pricing/
+currency: USD
+plan_count: 2
+summary: >-
+  Hustle publishes two platform subscription models on its public pricing page:
+  a pay-as-you-go (PAYGO) model with a flat platform fee plus per-segment
+  messaging, and an annual commitment starting at a stated floor. Pricing is for
+  the messaging platform, not for API access — the Public API v3 is included
+  with the platform and carries no separately published API tier, metering or
+  per-call price. There is no self-serve checkout: both paths route to "Request
+  a Demo" / "Book a demo".
+plans:
+- name: Pay-as-you-go (PAYGO)
+  slug: paygo
+  price: 250
+  currency: USD
+  price_note: '$250 platform fee'
+  billing_period: unspecified
+  usage_pricing:
+  - metric: SMS segment
+    price: 0.04
+    currency: USD
+    note: All PAYGO subscriptions are billed per segment. PAYGO plans are only available in segments (not per-message).
+  included_quota: null
+  overage: >-
+    No bundled quota — every segment is billed at $0.04, so there is no overage
+    tier.
+  commitment: none
+  features:
+  - Reach your audience without long-term commitments
+  - Only pay for what you need, when you need it
+  - Start messaging (and calling) quickly
+  limits:
+  - Segment (not per-message) pricing only
+  - No short-code sending (short code requires an annual commitment)
+  - No Hustle Stories (annual commitment only)
+  - No dedicated CSM and no support-queue priority
+  url: https://hustle.com/paygo/
+- name: Annual commitment
+  slug: annual
+  price: 10000
+  currency: USD
+  price_note: Starts at $10,000 per year
+  billing_period: year
+  usage_pricing:
+  - metric: SMS segment or SMS message
+    price: null
+    note: >-
+      "Per-segment or per-message pricing available" with "discounted
+      messages/segments based on volume". Hustle does not publish the per-unit
+      rate or the volume tiers for this model — quoted by sales.
+  included_quota: null
+  overage: null
+  commitment: 1 year minimum
+  features:
+  - Priority in the support queue
+  - Support of a CSM (Client Success Manager)
+  - Discounted messages/segments based on volume
+  - Ability to send messages over a short code
+  - Access to Hustle Stories
+  limits: []
+included_with_every_subscription:
+- 10DLC and compliance support
+- Access to the full Hustle platform
+- P2P messaging
+- Broadcast messaging
+- Video messaging (Clips and Personalized Clips)
+- Dialer
+- Free incoming messages, inbound calls, and inbound videos/images
+- No hidden carrier or 10DLC registration fees
+api_pricing:
+  published: false
+  note: >-
+    No API-specific plan, call quota, or per-request price is published. The
+    Public API v3 is a platform capability; access is governed by the client_id
+    / client_secret Hustle issues to an account. Runtime throttling is documented
+    separately at rate-limits/hustle-rate-limits.yml (25 req/s).
+self_serve:
+  available: false
+  note: >-
+    Both models funnel to a demo request form; there is no published online
+    checkout or free tier. `accessModel.pricing` in apis.yml is therefore
+    "quote-and-demo" for the annual tier and list-priced for PAYGO.

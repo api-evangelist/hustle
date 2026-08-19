@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.hustle.com/v3/docs/description.html
+docs: https://api.hustle.com/v3/docs/
+limit_count: 3
+summary: >-
+  Hustle documents a flat per-second request ceiling for resource endpoints in
+  the "Rate Limiting" section of the Public API v3 developer guide, plus two
+  distinct abuse limits on the token endpoint that block the caller's IP rather
+  than throttling it. No RateLimit-* / X-RateLimit-* response headers and no
+  Retry-After header are documented, and none are declared in the OpenAPI, so a
+  client cannot read remaining quota at runtime — the documented remedy is to
+  retry on error and to self-throttle parallelism.
+limits:
+- scope: per-account (resource endpoints)
+  applies_to: All endpoints returning resources (everything except POST /oauth/token)
+  limit: 25
+  unit: requests
+  window: 1s
+  burst: null
+  on_exhaustion:
+    behavior: >-
+      "the API will return an error and the request will need to be retried" —
+      the docs do not name the status code, and no 429 response is declared in
+      the OpenAPI (declared error responses are 400/401/404/422/500).
+    status_code: null
+    retry_after_header: false
+  quote: >-
+    "Access to the API will be limited to 25 requests per second for endpoints
+    returning resources. When this limit is reached the API will return an error
+    and the request will need to be retried."
+- scope: per-ip-per-account (token endpoint, short window)
+  applies_to: POST /oauth/token
+  limit: 10
+  unit: failed authentication attempts
+  window: unspecified
+  on_exhaustion:
+    behavior: >-
+      The requesting IP is blocked "for some period of time", but only for the
+      account in question. This limits FAILED attempts only — successful token
+      minting is not counted.
+    status_code: null
+    retry_after_header: false
+  quote: >-
+    "Creating an access token is an exception in that it only limits the number
+    of failed attempts to create an access token. After 10 failed attempts to
+    create an access token the ip of the request will be blocked for some period
+    of time, but only for the account in question."
+- scope: per-ip (token endpoint, daily)
+  applies_to: POST /oauth/token
+  limit: 100
+  unit: failed authentication attempts
+  window: 24h
+  on_exhaustion:
+    behavior: The requester's IP is blocked.
+    status_code: null
+    retry_after_header: false
+  quote: >-
+    "Additionally 100 failed attempts in a 24-hour period will result in the
+    requester's ip being blocked."
+response_headers:
+  documented: false
+  headers: []
+  note: >-
+    No rate-limit signalling headers (RateLimit-Limit/Remaining/Reset,
+    X-RateLimit-*, Retry-After) are documented in the developer guide or
+    declared in the OpenAPI. An agent has no runtime signal for remaining quota
+    and must infer exhaustion from an error response.
+pagination_limits:
+  default_page_size: 100
+  max_page_size: 1000
+  note: >-
+    "The current default limit is 100 results and the max limit is 1000 results,
+    but please note these values may change." The OpenAPI enforces the ceiling
+    on the `limit` query parameter (maximum 1000, minimum 1).
+guidance:
+  quote: >-
+    "Consider throttling the number of parallel requests to avoid rate limiting.
+    For long-running processes, use an access token until it expires before
+    requesting a new one... When a 401 is returned from any resource request
+    create a new access token and retry the request with the new access token."
+  token_lifetime_seconds: 7200

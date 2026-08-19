@@ -1,6 +1,6 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: derived
-source: openapi/hustle-openapi-original.json
+source: openapi/_original/hustle-openapi-original.json
 format: custom-json
 envelope:
   media_type: application/json
@@ -42,5 +42,28 @@ applies_to:
   operations: all
   detail: >-
     Every resource operation (Agents, Custom Fields, Groups, Integrations,
-    Leads, Organizations, Tags, Webhooks) declares 400/401/404/422/500
+    Leads, Messages, Organizations, Tags, Webhooks) declares 400/401/404/422/500
     responses using the shared ErrorResponse schema.
+delivery_error_codes:
+  surface: MessageStatus.errorCode (GET /messages/{id} and the messageStatus-v1 webhook)
+  enumerated: false
+  examples:
+  - {code: not_textable, meaning: 'The destination number cannot receive the message.'}
+  - {code: lookup_timeout, meaning: 'Carrier lookup did not resolve within the documented 1-hour pending_lookup SLA.'}
+  note: >-
+    Delivery failures are reported OUT of the HTTP error envelope: a
+    GET /messages/{id} returns 200 with a failure `status` and an `errorCode`
+    string. The spec names two examples and then defers — "See the messaging
+    webhooks docs for the full list" — but that list is not published on the
+    public developer surface, so the code set cannot be enumerated here without
+    fabricating it. This is a real, provider-fixable gap: an agent cannot
+    programmatically classify a delivery failure from published material.
+missing_status_codes:
+- status: 429
+  note: >-
+    Hustle documents a 25 req/s limit and says the API "will return an error"
+    when it is reached, but declares no 429 response on any operation and names
+    no status code in prose. A client cannot know what exhaustion looks like
+    before it happens. See rate-limits/hustle-rate-limits.yml.
+- status: 403
+  note: No 403 is declared; authorization failures appear to surface as 401 or 404.

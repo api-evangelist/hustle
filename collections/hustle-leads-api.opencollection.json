@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hustle Public Access Token Leads API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v3/leads",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Lead ID"
+              },
+              {
+                "name": "phoneNumber",
+                "value": "",
+                "type": "query",
+                "description": "The Lead's phone number. Represented as an E.164 Format (i.e +15554441234 for (555) 444-1234 in the US)."
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID."
+              },
+              {
+                "name": "groupId",
+                "value": "",
+                "type": "query",
+                "description": "A Group ID. This will return a lead that has this group inside of the activeGroupIds array. To also include inactive groups, use the searchInactiveGroups query parameter."
+              },
+              {
+                "name": "leadStatusInGroup",
+                "value": "",
+                "type": "query",
+                "description": "When a groupId is passed, this determines whether we look in the activeGroupIds array, inactiveGroupIds array, or both. Defaults to active."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of items per page."
+              }
+            ]
+          },
+          "docs": "Get a list of leads scoped by the query parameters."
+        },
+        {
+          "info": {
+            "name": "Upsert Lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v3/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead or updates the existing lead in the organization with that phone number."
+        },
+        {
+          "info": {
+            "name": "Update Leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/v3/leads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform the specified operations on the specified leads."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

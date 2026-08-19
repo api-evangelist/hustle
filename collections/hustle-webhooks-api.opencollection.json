@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Hustle Public Access Token Webhooks API",
+    "version": "v3"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Webhook Registrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/v3/webhook_registrations",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Webhook registration ID."
+              },
+              {
+                "name": "configType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by webhook configuration type."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for start of next set of items. Pass whatever you receive from the response to get the next elements in the array."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit of items per page."
+              }
+            ]
+          },
+          "docs": "Get a list of webhook registrations scoped by the query parameters."
+        },
+        {
+          "info": {
+            "name": "Create Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v3/webhook_registrations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new webhook registration to receive webhook events. For more information and documentation, see https://api.hustle.com/docs/webhooks."
+        },
+        {
+          "info": {
+            "name": "Update Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/v3/webhook_registrations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the webhook registration to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing webhook registration."
+        },
+        {
+          "info": {
+            "name": "Delete Webhook Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/v3/webhook_registrations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the webhook registration to delete."
+              }
+            ]
+          },
+          "docs": "Delete an existing webhook registration."
+        },
+        {
+          "info": {
+            "name": "Mock Webhook Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/v3/webhook_registrations/mock_event",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mock a webhook event."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

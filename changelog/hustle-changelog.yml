@@ -1,0 +1,73 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.hustle.com/v3/docs/description.html
+docs: https://api.hustle.com/v3/docs/
+scheme: major-version-in-uri-path
+current_version: v3
+current_version_spec: https://api.hustle.com/v3/docs/swagger.json
+summary: >-
+  Hustle does not publish a dated, entry-by-entry API changelog. What it does
+  publish is a "Release notes" section at the top of the Public API v3 developer
+  guide describing the 3.0 migration, plus live documentation for the two prior
+  major versions (v1 and v2 both still return 200), so consumers can diff the
+  contract themselves. Entries below therefore carry no dates — that is the
+  finding, not an omission on our side.
+dated: false
+dated_note: >-
+  No entry in the release-notes section is dated, and no RSS/Atom feed, blog
+  category or status-page "changes" stream carries API release notes. The only
+  dated API signals available are the version-control history of the first-party
+  client (github.com/Hustle/hustle-public-api-samples, last commit 2024-09-04)
+  and our own spec captures.
+entries:
+- version: '3.0'
+  date: null
+  title: Hustle Public API v3
+  breaking: true
+  highlights:
+  - >-
+    "Our goal with version 3 is to provide a more familiar REST interface while
+    moving pieces in the backend to enable us to add new organization level
+    features to the API."
+  - >-
+    Pagination changed: v2 threw an error past the 100,000th element of a set;
+    v3 does not. The total record count for a set is no longer available.
+  breaking_changes:
+  - >-
+    "Almost all endpoints are now new." Hustle publishes a v2-to-v3 endpoint
+    mapping spreadsheet rather than in-place aliases.
+  - >-
+    All GET endpoints lost their path parameters — the base resource endpoint
+    now returns every resource in the account and is narrowed with query
+    parameters (GET /v2/groups/{groupId}/leads became GET /v3/leads?groupId=…).
+  - >-
+    All POST endpoints lost their URL parameters — those values move into the
+    request body (POST /v2/groups/{groupId}/leads became POST /v3/leads with
+    groupId in the body).
+  - Total-count on list responses was removed.
+  retained:
+  - PUT endpoints still carry the main resource id in the URL.
+  - Individual PATCH endpoints still carry the main resource id in the URL.
+  additions:
+  - GET /v3/integrations returns every integration for the account.
+  - >-
+    PATCH /v3/leads gained an operation to link a lead to its external
+    representation in an integration belonging to the lead's organization.
+  migration_guide: https://docs.google.com/spreadsheets/d/16swHJxCaV_NPjJH1UOyppsV38xX7Vj5FFnG61Nxs608/edit#gid=0
+prior_versions:
+- version: v2
+  docs: https://api.hustle.com/v2/docs
+  status: documented and reachable (HTTP 200 on 2026-08-13); no sunset date published
+- version: v1
+  docs: https://api.hustle.com/v1/docs
+  status: documented and reachable (HTTP 200 on 2026-08-13); no sunset date published
+observed_changes:
+- observed: '2026-08-13'
+  by: API Evangelist enrichment pipeline
+  change: >-
+    GET /messages/{id} ("Get Message") and the MessageStatus schema are present
+    in the live https://api.hustle.com/v3/docs/swagger.json but were absent from
+    the copy harvested on 2026-07-19 — an undated, additive change to v3 that
+    Hustle did not announce anywhere we could find. Captured as
+    openapi/hustle-messages-api-openapi.yml.
+  breaking: false

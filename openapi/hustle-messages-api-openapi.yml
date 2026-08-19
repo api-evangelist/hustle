@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Hustle Public Access Token Messages API
+  version: v3
+  description: The Hustle Public API exposes a RESTful interface to provide programmatic access to resources within your Hustle account. The API is defined using the OpenAPI specification (aka Swagger) which can be downloaded above and used to generate a client in various languages. This may help speed up integration with the API, but is not required.
+servers:
+- url: /v3
+tags:
+- name: Messages
+paths:
+  /messages/{id}:
+    get:
+      summary: Get Message
+      description: Read one message's delivery status.
+      tags:
+      - Messages
+      parameters:
+      - schema:
+          type: string
+        required: true
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Returns the message and its current delivery status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageStatus'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    MessageStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        threadId:
+          type: string
+        status:
+          type: string
+          description: 'Current delivery status. Non-terminal: pending_lookup (<1h SLA), queued. Terminal: sent, failed, undelivered, etc. (plus carrier statuses). Left open as a string because the set evolves; see the messaging webhooks docs for the enumerated terminal states.'
+        type:
+          type: string
+          enum:
+          - SMS
+          - MMS
+        createdAt:
+          type: string
+          description: ISO-8601 creation timestamp
+        errorCode:
+          type: string
+          description: Present when status is a failure (e.g. not_textable, lookup_timeout, or a carrier failure). See the messaging webhooks docs for the full list.
+      required:
+      - id
+      - threadId
+      - status
+      - type
+      - createdAt
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false

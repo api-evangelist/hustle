@@ -1,17 +1,15 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: derived
 status: candidate
-source: openapi/hustle-openapi-original.json
+source: openapi/_original/hustle-openapi-original.json
 server:
   name: hustle
   transport: http
   url: null
-note: >-
-  No official hosted/remote Hustle MCP server was found (no listing in the MCP
-  registry, npm @modelcontextprotocol, or Hustle docs). The tool list below is a
-  candidate derived one-to-one from the Public API v3 operations so an MCP
-  wrapper could be generated. The spec declares no operationIds, so tools are
-  keyed by HTTP method + path.
+note: No official hosted/remote Hustle MCP server was found (no listing in the MCP registry, npm @modelcontextprotocol,
+  or Hustle docs). The tool list below is a candidate derived one-to-one from the Public API v3 operations
+  so an MCP wrapper could be generated. The spec declares no operationIds, so tools are keyed by HTTP
+  method + path.
 tools:
 - name: create_access_token
   description: Mint an OAuth2 client-credentials Bearer access token.
@@ -79,3 +77,22 @@ tools:
 - name: mock_webhook_event
   description: Send a mock event to test a webhook receiver.
   source_operation: POST /webhook_registrations/mock_event
+- name: get_message
+  description: Read one message's delivery status (id, threadId, status, SMS/MMS type, errorCode).
+  source_operation: GET /messages/{id}
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: searched
+  tools: 23
+  checked: '2026-08-13'
+  source: >-
+    Re-searched 2026-08-13. registry.modelcontextprotocol.io returns no Hustle
+    server (only unrelated "agenthustler"/"Agent Hustle" projects); npm has no
+    first-party @hustle MCP package; the Hustle GitHub org (45 repos) has no MCP
+    repo; and api.hustle.com/v3/docs makes no mention of MCP. Hustle ships
+    NEITHER a remote endpoint NOR a stdio package — mode is none and the tool
+    list below stays a derived candidate. No endpoint URL is guessed.

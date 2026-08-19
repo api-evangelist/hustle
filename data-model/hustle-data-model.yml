@@ -1,6 +1,6 @@
-generated: '2026-07-19'
+generated: '2026-08-13'
 method: derived
-source: openapi/hustle-openapi-original.json
+source: openapi/_original/hustle-openapi-original.json
 summary: >-
   Entity-relationship graph derived from the Hustle Public API OpenAPI schemas
   and their id-reference fields. Organization is the top-level tenant scope;
@@ -32,6 +32,20 @@ entities:
 - name: WebhookRegistration
   schema: WebhookRegistration
   description: A subscriber webhook endpoint with consent/message-status config.
+- name: Message
+  schema: MessageStatus
+  description: >-
+    A single outbound SMS/MMS and its delivery status. Read-only over the API
+    (GET /messages/{id}); messages are created in the Hustle product, not
+    through the Public API. Carries id, threadId, status, type (SMS|MMS),
+    createdAt and an optional errorCode on failure.
+- name: Thread
+  schema: null
+  description: >-
+    Conversation grouping referenced by Message.threadId. No Thread schema or
+    endpoint is published — the id is emitted but not resolvable through the
+    Public API, so this entity is inferred from the reference field only.
+  inferred: true
 relationships:
 - from: Agent
   to: Organization
@@ -73,5 +87,23 @@ relationships:
   to: Agent
   kind: has_many
   via: groupId
+- from: Message
+  to: Thread
+  kind: belongs_to
+  via: threadId
 natural_keys:
   Lead: [organizationId, phoneNumber]
+event_bindings:
+  MessageStatus: >-
+    The messageStatus-v1 webhook (asyncapi/hustle-webhooks.yml) is the push
+    counterpart of GET /messages/{id}; both project the same delivery-status
+    core. The MessageStatus.status field is deliberately an open string because
+    the terminal set evolves with carrier statuses.
+  ConsentUpdate: >-
+    The consentUpdate-v1 webhook reports Lead opt-in/opt-out transitions, the
+    same state PATCH /leads mutates via the optOut operation.
+gaps:
+- >-
+    No id-prefix convention is published; ids are opaque short strings (e.g.
+    "YGkEfkzz5V" for an Organization in the docs pagination example) with the
+    resource named separately in the `type` field on every response.

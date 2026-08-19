@@ -1,31 +1,37 @@
-generated: '2026-07-19'
-method: searched
+generated: '2026-08-13'
+method: probed
 source: live probes of /.well-known/* on api.hustle.com and hustle.com
+result: none
+pointer_emitted: false
 hosts:
 - host: https://api.hustle.com
   documents:
-  - path: /.well-known/security.txt
-    status: 404
-  - path: /.well-known/openid-configuration
-    status: 404
-  - path: /.well-known/oauth-authorization-server
-    status: 404
-  - path: /.well-known/api-catalog
-    status: 404
-  - path: /.well-known/ai-plugin.json
-    status: 404
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
 - host: https://hustle.com
   documents:
-  - path: /.well-known/security.txt
-    status: 404
-  - path: /.well-known/openid-configuration
-    status: 404
-  - path: /.well-known/oauth-authorization-server
-    status: 404
-  - path: /.well-known/api-catalog
-    status: 404
-  - path: /.well-known/ai-plugin.json
-    status: 404
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+checked: '2026-08-13'
 notes: >-
-  No /.well-known discovery documents are published on either the API host or
-  the marketing host. Absence recorded as valid data; no raw files saved.
+  Re-probed 2026-08-13: Hustle serves NO /.well-known discovery document on
+  either the API host or the marketing host. api.hustle.com answers every
+  unknown path with its own JSON 404 envelope
+  ({"code":404,"message":"Resource not found at path /.well-known/..."}), and
+  hustle.com answers with an nginx 404 body — neither is a soft-200 SPA
+  catch-all, so these are true negatives. This file records a measured ABSENCE:
+  per the enrichment contract no `WellKnown` or `SecurityTxt` pointer is wired
+  into apis.yml, because the pointer would assert that Hustle serves a surface
+  it does not. The WellKnown pointers carried on all nine API entries from the
+  2026-07-19 round were removed for this reason. Notably, the OAuth2
+  client-credentials token endpoint at /v3/oauth/token publishes no RFC 8414
+  authorization-server metadata, so an agent cannot discover it without reading
+  the human docs.

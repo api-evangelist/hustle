@@ -1,7 +1,8 @@
-generated: '2026-07-19'
-method: derived
-source: openapi/hustle-openapi-original.json
+generated: '2026-08-13'
+method: searched
+source: https://api.hustle.com/v3/docs/description.html
 docs: https://api.hustle.com/v3/docs/
+spec: openapi/_original/hustle-openapi-original.json
 authentication:
   style: oauth2-client-credentials
   header: 'Authorization: Bearer <access_token>'
@@ -25,9 +26,14 @@ idempotency:
     inserting existing values overwrites the existing lead.
 pagination:
   style: cursor
+  default_page_size: 100
+  max_page_size: 1000
   request_params:
     cursor: Opaque cursor marking the start of the next page.
-    limit: Maximum number of items to return.
+    limit: >-
+      Maximum number of items to return. Default 100, maximum 1000; the docs
+      warn "please note these values may change". Enforced in the OpenAPI as
+      minimum 1 / maximum 1000.
   response_fields:
     items: Array of resources for the current page.
     cursor: Cursor for the next page; null when no further items remain.
@@ -52,6 +58,48 @@ webhooks:
   signature: HMAC (secretForHMAC) signed events
   ref: asyncapi/hustle-webhooks.yml
 rate_limiting:
-  documented: false
-  note: No rate-limit headers or policy are declared in the OpenAPI.
+  documented: true
+  policy: 25 requests per second for endpoints returning resources; POST /oauth/token instead limits FAILED attempts (10 → temporary IP block for that account, 100 in 24h → IP block).
+  headers: []
+  headers_documented: false
+  status_code: null
+  note: >-
+    The limits are published in the "Rate Limiting" section of the developer
+    guide, but no RateLimit-* / X-RateLimit-* / Retry-After response headers are
+    documented or declared in the OpenAPI, and no 429 response is declared
+    anywhere in the spec. A client cannot read remaining quota at runtime; the
+    documented remedy is to self-throttle parallelism and retry on error.
+  ref: rate-limits/hustle-rate-limits.yml
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id / correlation header is documented or declared. On a 422 the
+    error envelope may carry `hustleErrorCode`, which the docs say to pass to
+    Hustle support — that is the closest thing to a support correlation handle.
+field_expansion:
+  supported: false
+  note: No expand / sparse-fieldset parameters are declared on any operation.
+metadata:
+  supported: true
+  mechanism: >-
+    Leads carry account-defined `customFields` (created via POST /custom_fields,
+    set via POST /leads or the setCustomField operation on PATCH /leads) and
+    `tags`. There is no generic free-form `metadata` object on other resources.
+response_shape:
+  single_resource_minimum_fields: [id, type, createdAt]
+  list_envelope: {items: array, cursor: string, hasMore: boolean}
+  note: >-
+    "Every response from the api, including errors, will be returned as JSON in
+    the body of the response and the content-type header set accordingly to
+    application/json." Single resources always carry at least id (Hustle's
+    unique identifier), type (the resource type) and createdAt (ISO 8601).
+token_handling:
+  token_lifetime_seconds: 7200
+  format: JWT
+  guidance: >-
+    "Access tokens are JSON Web Tokens (JWT) and are valid for two hours (7200
+    seconds)." Long-running processes should reuse a token until it expires and
+    mint a new one on a 401, then retry the request — repeated failed token
+    requests are what triggers the IP block.
+changelog_ref: changelog/hustle-changelog.yml
 lifecycle_ref: lifecycle/hustle-lifecycle.yml
