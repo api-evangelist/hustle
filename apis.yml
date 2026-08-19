@@ -34,7 +34,7 @@ x-backed-by:
 - insight-partners
 x-tier: enriched
 x-tier-reason: full public developer surface harvested (OpenAPI 3.1, 23 operations, documented rate limits, published pricing, first-party client)
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-08-13'
 tags:
