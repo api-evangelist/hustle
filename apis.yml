@@ -46,6 +46,17 @@ tags:
 - Communications
 - Marketing
 - Civic Engagement
+- Webhook
+- Authentication
+tags_raw:
+- Company
+- Enterprise
+- Messaging
+- SMS
+- Peer-to-Peer Texting
+- Communications
+- Marketing
+- Civic Engagement
 - Webhooks
 - OAuth
 apis:
@@ -145,6 +156,8 @@ apis:
   humanURL: https://api.hustle.com/v3/docs/
   baseURL: https://api.hustle.com/v3
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -175,6 +188,8 @@ apis:
   humanURL: https://api.hustle.com/v3/docs/
   baseURL: https://api.hustle.com/v3
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -235,6 +250,8 @@ apis:
   humanURL: https://api.hustle.com/v3/docs/
   baseURL: https://api.hustle.com/v3
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -267,6 +284,8 @@ apis:
   humanURL: https://api.hustle.com/v3/docs/
   baseURL: https://api.hustle.com/v3
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -327,6 +346,8 @@ apis:
   humanURL: https://api.hustle.com/v3/docs/
   baseURL: https://api.hustle.com/v3
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
