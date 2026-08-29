@@ -14,6 +14,18 @@ description: >-
   portfolio company of GV and Insight Partners and enriched from its public
   developer surface.
 url: https://raw.githubusercontent.com/api-evangelist/hustle/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
