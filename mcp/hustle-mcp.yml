@@ -82,17 +82,7 @@ tools:
   source_operation: GET /messages/{id}
 deployment:
   mode: none
-  endpoint: null
-  install: null
-  package: null
-  auth: none
-  verified: searched
-  tools: 23
-  checked: '2026-08-13'
-  source: >-
-    Re-searched 2026-08-13. registry.modelcontextprotocol.io returns no Hustle
-    server (only unrelated "agenthustler"/"Agent Hustle" projects); npm has no
-    first-party @hustle MCP package; the Hustle GitHub org (45 repos) has no MCP
-    repo; and api.hustle.com/v3/docs makes no mention of MCP. Hustle ships
-    NEITHER a remote endpoint NOR a stdio package — mode is none and the tool
-    list below stays a derived candidate. No endpoint URL is guessed.
+  verified: derived
+  tools: 22
+  checked: '2026-08-12'
+  source: catalog MCP census

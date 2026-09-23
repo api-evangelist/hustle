@@ -1,15 +1,7 @@
 {
   "provider": "hustle",
   "sources": [
-    "hustle-access-token-api-openapi.yml",
-    "hustle-agents-api-openapi.yml",
-    "hustle-custom-fields-api-openapi.yml",
-    "hustle-groups-api-openapi.yml",
-    "hustle-integrations-api-openapi.yml",
-    "hustle-leads-api-openapi.yml",
-    "hustle-organizations-api-openapi.yml",
-    "hustle-tags-api-openapi.yml",
-    "hustle-webhooks-api-openapi.yml"
+    "_original/hustle-openapi-original.json"
   ],
   "outputs": [
     "hustle-access-token-api-openapi.yml",
@@ -18,6 +10,7 @@
     "hustle-groups-api-openapi.yml",
     "hustle-integrations-api-openapi.yml",
     "hustle-leads-api-openapi.yml",
+    "hustle-messages-api-openapi.yml",
     "hustle-organizations-api-openapi.yml",
     "hustle-tags-api-openapi.yml",
     "hustle-webhooks-api-openapi.yml"
@@ -25,6 +18,31 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "hustle-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. Custom Field)",
+    "hustle-openapi-original.json: declared missing tag: Access Token",
+    "hustle-openapi-original.json: declared missing tag: Agents",
+    "hustle-openapi-original.json: declared missing tag: Custom Fields",
+    "hustle-openapi-original.json: declared missing tag: Groups",
+    "hustle-openapi-original.json: declared missing tag: Integrations",
+    "hustle-openapi-original.json: declared missing tag: Leads",
+    "hustle-openapi-original.json: declared missing tag: Messages",
+    "hustle-openapi-original.json: declared missing tag: Organizations",
+    "hustle-openapi-original.json: declared missing tag: Tags",
+    "hustle-openapi-original.json: declared missing tag: Webhooks",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "hustle-access-token-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-agents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-custom-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "hustle-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

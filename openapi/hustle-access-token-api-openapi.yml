@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Hustle Public Access Token API
   version: v3
@@ -11,7 +11,7 @@ paths:
   /oauth/token:
     post:
       summary: Create Access Token
-      description: Your server-side script or backend application must authenticate to create an access token. Access tokens are used to authorize requests that read and write Hustle resources. To authenticate use your Hustle provided client_id and client_secret to make a request following the <a href="https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/">OAuth2 client credentials flow.</a>
+      description: Your server-side script or backend application must authenticate to create an access token. Access tokens are used to authorize requests that read and write Hustle resources. To authenticate use your Hustle provided client_id and client_secret to make a request following the OAuth2 client credentials flow.
       tags:
       - Access Token
       requestBody:
@@ -58,6 +58,8 @@ paths:
                 - scope
                 - expires_in
                 additionalProperties: false
+      operationId: postOauthToken
+      x-operation-id-source: derived
 externalDocs:
   description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
   url: description.html
