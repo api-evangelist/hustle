@@ -635,6 +635,23 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    WebhookOrganizationsScopeV1:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - organizations
+          description: Scope the webhook to leads in specific organizations.
+        organizationIds:
+          type: array
+          items:
+            type: string
+          description: Array of organization IDs to scope the webhook to.
+      required:
+      - type
+      - organizationIds
+      additionalProperties: false
     MessageStatusV1Config:
       type: object
       properties:
@@ -655,49 +672,6 @@ components:
       required:
       - type
       - scope
-      additionalProperties: false
-    WebhookRegistration:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the webhook registration.
-        type:
-          type: string
-          enum:
-          - webhook_registration
-          description: The type of object the attached ID corresponds to.
-        targetUrl:
-          type: string
-          format: uri
-          description: The URL that will receive webhook events.
-        config:
-          $ref: '#/components/schemas/WebhookConfig'
-        createdAt:
-          type: string
-          description: An ISO-8601 string representing the date the webhook registration was created.
-        secretForHMAC:
-          type: boolean
-          description: Whether a secret is currently active for HMAC signature verification of webhook events. We do not ever return the secret so if you have lost your copy, you will need to set a new one.
-      required:
-      - id
-      - type
-      - targetUrl
-      - config
-      - createdAt
-      - secretForHMAC
-      additionalProperties: false
-      description: A webhook registration defines when and where webhook events should be sent.
-    WebhookAccountScopeV1:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - account
-          description: Scope the webhook to leads in the entire account.
-      required:
-      - type
       additionalProperties: false
     WebhookConfig:
       oneOf:
@@ -738,22 +712,16 @@ components:
       - includeOptOut
       - includeOptIn
       additionalProperties: false
-    WebhookOrganizationsScopeV1:
+    WebhookAccountScopeV1:
       type: object
       properties:
         type:
           type: string
           enum:
-          - organizations
-          description: Scope the webhook to leads in specific organizations.
-        organizationIds:
-          type: array
-          items:
-            type: string
-          description: Array of organization IDs to scope the webhook to.
+          - account
+          description: Scope the webhook to leads in the entire account.
       required:
       - type
-      - organizationIds
       additionalProperties: false
     ErrorResponse:
       type: object
@@ -771,6 +739,38 @@ components:
       - code
       - message
       additionalProperties: false
+    WebhookRegistration:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the webhook registration.
+        type:
+          type: string
+          enum:
+          - webhook_registration
+          description: The type of object the attached ID corresponds to.
+        targetUrl:
+          type: string
+          format: uri
+          description: The URL that will receive webhook events.
+        config:
+          $ref: '#/components/schemas/WebhookConfig'
+        createdAt:
+          type: string
+          description: An ISO-8601 string representing the date the webhook registration was created.
+        secretForHMAC:
+          type: boolean
+          description: Whether a secret is currently active for HMAC signature verification of webhook events. We do not ever return the secret so if you have lost your copy, you will need to set a new one.
+      required:
+      - id
+      - type
+      - targetUrl
+      - config
+      - createdAt
+      - secretForHMAC
+      additionalProperties: false
+      description: A webhook registration defines when and where webhook events should be sent.
 externalDocs:
   description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
   url: description.html
