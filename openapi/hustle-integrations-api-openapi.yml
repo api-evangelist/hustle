@@ -259,6 +259,22 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
     VanPatchIntegration:
       type: object
       properties:
@@ -282,62 +298,6 @@ components:
           additionalProperties: false
       required:
       - type
-      - credentials
-      additionalProperties: false
-    VanMyVotersPatchIntegration:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - updateVANMyVotersCredentials
-          description: This operation will update the credentials associated with an integration provided the credentials are valid.
-        credentials:
-          type: object
-          properties:
-            applicationName:
-              type: string
-              description: application name used to authenticate.
-            apiKey:
-              type: string
-              description: apiKey used to authenticate.
-          required:
-          - applicationName
-          - apiKey
-          additionalProperties: false
-      required:
-      - type
-      - credentials
-      additionalProperties: false
-    VanCreateIntegration:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - van
-        name:
-          type: string
-          description: Name of the integration to be created
-        credentials:
-          type: object
-          properties:
-            applicationName:
-              type: string
-              description: application name used to authenticate.
-            apiKey:
-              type: string
-              description: apiKey used to authenticate.
-          required:
-          - applicationName
-          - apiKey
-          additionalProperties: false
-        refKey:
-          type: string
-          description: Key used for processing of saved list.
-      required:
-      - type
-      - name
       - credentials
       additionalProperties: false
     PDICreateIntegration:
@@ -371,22 +331,6 @@ components:
       - type
       - name
       - credentials
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: number
-          description: Error code; usually the status code.
-        message:
-          type: string
-          description: Error message detailing the error.
-        hustleErrorCode:
-          type: string
-          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
-      required:
-      - code
-      - message
       additionalProperties: false
     PDIPatchIntegration:
       type: object
@@ -487,6 +431,62 @@ components:
       required:
       - type
       - name
+      - credentials
+      additionalProperties: false
+    VanCreateIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - van
+        name:
+          type: string
+          description: Name of the integration to be created
+        credentials:
+          type: object
+          properties:
+            applicationName:
+              type: string
+              description: application name used to authenticate.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate.
+          required:
+          - applicationName
+          - apiKey
+          additionalProperties: false
+        refKey:
+          type: string
+          description: Key used for processing of saved list.
+      required:
+      - type
+      - name
+      - credentials
+      additionalProperties: false
+    VanMyVotersPatchIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - updateVANMyVotersCredentials
+          description: This operation will update the credentials associated with an integration provided the credentials are valid.
+        credentials:
+          type: object
+          properties:
+            applicationName:
+              type: string
+              description: application name used to authenticate.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate.
+          required:
+          - applicationName
+          - apiKey
+          additionalProperties: false
+      required:
+      - type
       - credentials
       additionalProperties: false
 externalDocs:

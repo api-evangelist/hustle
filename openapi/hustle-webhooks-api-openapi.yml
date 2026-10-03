@@ -635,54 +635,22 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    WebhookOrganizationsScopeV1:
+    ErrorResponse:
       type: object
       properties:
-        type:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
           type: string
-          enum:
-          - organizations
-          description: Scope the webhook to leads in specific organizations.
-        organizationIds:
-          type: array
-          items:
-            type: string
-          description: Array of organization IDs to scope the webhook to.
-      required:
-      - type
-      - organizationIds
-      additionalProperties: false
-    MessageStatusV1Config:
-      type: object
-      properties:
-        type:
+          description: Error message detailing the error.
+        hustleErrorCode:
           type: string
-          enum:
-          - messageStatus-v1
-          description: Message Status updates are sent when a message status changes (e.g., delivered, failed).
-        scope:
-          oneOf:
-          - $ref: '#/components/schemas/WebhookOrganizationsScopeV1'
-          - $ref: '#/components/schemas/WebhookAccountScopeV1'
-          discriminator:
-            propertyName: type
-            mapping:
-              organizations: '#/components/schemas/WebhookOrganizationsScopeV1'
-              account: '#/components/schemas/WebhookAccountScopeV1'
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
       required:
-      - type
-      - scope
+      - code
+      - message
       additionalProperties: false
-    WebhookConfig:
-      oneOf:
-      - $ref: '#/components/schemas/ConsentUpdateV1Config'
-      - $ref: '#/components/schemas/MessageStatusV1Config'
-      discriminator:
-        propertyName: type
-        mapping:
-          consentUpdate-v1: '#/components/schemas/ConsentUpdateV1Config'
-          messageStatus-v1: '#/components/schemas/MessageStatusV1Config'
-      description: The configuration object for the webhook.
     ConsentUpdateV1Config:
       type: object
       properties:
@@ -711,33 +679,6 @@ components:
       - scope
       - includeOptOut
       - includeOptIn
-      additionalProperties: false
-    WebhookAccountScopeV1:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - account
-          description: Scope the webhook to leads in the entire account.
-      required:
-      - type
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: number
-          description: Error code; usually the status code.
-        message:
-          type: string
-          description: Error message detailing the error.
-        hustleErrorCode:
-          type: string
-          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
-      required:
-      - code
-      - message
       additionalProperties: false
     WebhookRegistration:
       type: object
@@ -771,6 +712,65 @@ components:
       - secretForHMAC
       additionalProperties: false
       description: A webhook registration defines when and where webhook events should be sent.
+    WebhookConfig:
+      oneOf:
+      - $ref: '#/components/schemas/ConsentUpdateV1Config'
+      - $ref: '#/components/schemas/MessageStatusV1Config'
+      discriminator:
+        propertyName: type
+        mapping:
+          consentUpdate-v1: '#/components/schemas/ConsentUpdateV1Config'
+          messageStatus-v1: '#/components/schemas/MessageStatusV1Config'
+      description: The configuration object for the webhook.
+    MessageStatusV1Config:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - messageStatus-v1
+          description: Message Status updates are sent when a message status changes (e.g., delivered, failed).
+        scope:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookOrganizationsScopeV1'
+          - $ref: '#/components/schemas/WebhookAccountScopeV1'
+          discriminator:
+            propertyName: type
+            mapping:
+              organizations: '#/components/schemas/WebhookOrganizationsScopeV1'
+              account: '#/components/schemas/WebhookAccountScopeV1'
+      required:
+      - type
+      - scope
+      additionalProperties: false
+    WebhookOrganizationsScopeV1:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - organizations
+          description: Scope the webhook to leads in specific organizations.
+        organizationIds:
+          type: array
+          items:
+            type: string
+          description: Array of organization IDs to scope the webhook to.
+      required:
+      - type
+      - organizationIds
+      additionalProperties: false
+    WebhookAccountScopeV1:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - account
+          description: Scope the webhook to leads in the entire account.
+      required:
+      - type
+      additionalProperties: false
 externalDocs:
   description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
   url: description.html
