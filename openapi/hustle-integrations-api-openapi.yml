@@ -259,30 +259,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: number
-          description: Error code; usually the status code.
-        message:
-          type: string
-          description: Error message detailing the error.
-        hustleErrorCode:
-          type: string
-          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
-      required:
-      - code
-      - message
-      additionalProperties: false
-    VanPatchIntegration:
+    VanMyVotersCreateIntegration:
       type: object
       properties:
         type:
           type: string
           enum:
-          - updateVANCredentials
-          description: This operation will update the credentials associated with an integration provided the credentials are valid.
+          - van_myvoters
+        name:
+          type: string
+          description: Name of the integration to be created
         credentials:
           type: object
           properties:
@@ -296,37 +282,9 @@ components:
           - applicationName
           - apiKey
           additionalProperties: false
-      required:
-      - type
-      - credentials
-      additionalProperties: false
-    PDICreateIntegration:
-      type: object
-      properties:
-        type:
+        refKey:
           type: string
-          enum:
-          - pdi
-        name:
-          type: string
-          description: Name of the integration to be created
-        credentials:
-          type: object
-          properties:
-            username:
-              type: string
-              description: Username or email used to authenticate to the integration.
-            password:
-              type: string
-              description: Password used to authenticate to the integration.
-            apiKey:
-              type: string
-              description: apiKey used to authenticate to PDI.
-          required:
-          - username
-          - password
-          - apiKey
-          additionalProperties: false
+          description: Key used for processing of saved list.
       required:
       - type
       - name
@@ -402,16 +360,14 @@ components:
       - createdAt
       additionalProperties: false
       description: An integration represents a connection between Hustle data and an external service (such as Salesforce, VAN, or PDI).
-    VanMyVotersCreateIntegration:
+    VanPatchIntegration:
       type: object
       properties:
         type:
           type: string
           enum:
-          - van_myvoters
-        name:
-          type: string
-          description: Name of the integration to be created
+          - updateVANCredentials
+          description: This operation will update the credentials associated with an integration provided the credentials are valid.
         credentials:
           type: object
           properties:
@@ -425,13 +381,25 @@ components:
           - applicationName
           - apiKey
           additionalProperties: false
-        refKey:
-          type: string
-          description: Key used for processing of saved list.
       required:
       - type
-      - name
       - credentials
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
       additionalProperties: false
     VanCreateIntegration:
       type: object
@@ -487,6 +455,38 @@ components:
           additionalProperties: false
       required:
       - type
+      - credentials
+      additionalProperties: false
+    PDICreateIntegration:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - pdi
+        name:
+          type: string
+          description: Name of the integration to be created
+        credentials:
+          type: object
+          properties:
+            username:
+              type: string
+              description: Username or email used to authenticate to the integration.
+            password:
+              type: string
+              description: Password used to authenticate to the integration.
+            apiKey:
+              type: string
+              description: apiKey used to authenticate to PDI.
+          required:
+          - username
+          - password
+          - apiKey
+          additionalProperties: false
+      required:
+      - type
+      - name
       - credentials
       additionalProperties: false
 externalDocs:

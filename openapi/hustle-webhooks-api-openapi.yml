@@ -635,50 +635,33 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: number
-          description: Error code; usually the status code.
-        message:
-          type: string
-          description: Error message detailing the error.
-        hustleErrorCode:
-          type: string
-          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
-      required:
-      - code
-      - message
-      additionalProperties: false
-    ConsentUpdateV1Config:
+    WebhookAccountScopeV1:
       type: object
       properties:
         type:
           type: string
           enum:
-          - consentUpdate-v1
-          description: Consent Updates are sent when a lead updates their consent status to opt-in or opt-out of communications.
-        scope:
-          oneOf:
-          - $ref: '#/components/schemas/WebhookOrganizationsScopeV1'
-          - $ref: '#/components/schemas/WebhookAccountScopeV1'
-          discriminator:
-            propertyName: type
-            mapping:
-              organizations: '#/components/schemas/WebhookOrganizationsScopeV1'
-              account: '#/components/schemas/WebhookAccountScopeV1'
-        includeOptOut:
-          type: boolean
-          description: Whether to include opt-out events in the webhook.
-        includeOptIn:
-          type: boolean
-          description: Whether to include opt-in events in the webhook.
+          - account
+          description: Scope the webhook to leads in the entire account.
       required:
       - type
-      - scope
-      - includeOptOut
-      - includeOptIn
+      additionalProperties: false
+    WebhookOrganizationsScopeV1:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - organizations
+          description: Scope the webhook to leads in specific organizations.
+        organizationIds:
+          type: array
+          items:
+            type: string
+          description: Array of organization IDs to scope the webhook to.
+      required:
+      - type
+      - organizationIds
       additionalProperties: false
     WebhookRegistration:
       type: object
@@ -712,6 +695,22 @@ components:
       - secretForHMAC
       additionalProperties: false
       description: A webhook registration defines when and where webhook events should be sent.
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
     WebhookConfig:
       oneOf:
       - $ref: '#/components/schemas/ConsentUpdateV1Config'
@@ -722,6 +721,35 @@ components:
           consentUpdate-v1: '#/components/schemas/ConsentUpdateV1Config'
           messageStatus-v1: '#/components/schemas/MessageStatusV1Config'
       description: The configuration object for the webhook.
+    ConsentUpdateV1Config:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - consentUpdate-v1
+          description: Consent Updates are sent when a lead updates their consent status to opt-in or opt-out of communications.
+        scope:
+          oneOf:
+          - $ref: '#/components/schemas/WebhookOrganizationsScopeV1'
+          - $ref: '#/components/schemas/WebhookAccountScopeV1'
+          discriminator:
+            propertyName: type
+            mapping:
+              organizations: '#/components/schemas/WebhookOrganizationsScopeV1'
+              account: '#/components/schemas/WebhookAccountScopeV1'
+        includeOptOut:
+          type: boolean
+          description: Whether to include opt-out events in the webhook.
+        includeOptIn:
+          type: boolean
+          description: Whether to include opt-in events in the webhook.
+      required:
+      - type
+      - scope
+      - includeOptOut
+      - includeOptIn
+      additionalProperties: false
     MessageStatusV1Config:
       type: object
       properties:
@@ -742,34 +770,6 @@ components:
       required:
       - type
       - scope
-      additionalProperties: false
-    WebhookOrganizationsScopeV1:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - organizations
-          description: Scope the webhook to leads in specific organizations.
-        organizationIds:
-          type: array
-          items:
-            type: string
-          description: Array of organization IDs to scope the webhook to.
-      required:
-      - type
-      - organizationIds
-      additionalProperties: false
-    WebhookAccountScopeV1:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - account
-          description: Scope the webhook to leads in the entire account.
-      required:
-      - type
       additionalProperties: false
 externalDocs:
   description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
