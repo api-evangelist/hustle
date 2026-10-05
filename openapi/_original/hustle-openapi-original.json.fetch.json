@@ -1,0 +1,12 @@
+{
+ "url": "https://api.hustle.com/v3/docs/swagger.json",
+ "requested_url": "https://api.hustle.com/v3/docs/swagger.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 76589,
+ "sha256": "e920ac8ed2253407c307c15bfc140c72782bf521ab91380a776628a6ecb1a361",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
