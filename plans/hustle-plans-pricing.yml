@@ -84,3 +84,23 @@ self_serve:
     Both models funnel to a demo request form; there is no published online
     checkout or free tier. `accessModel.pricing` in apis.yml is therefore
     "quote-and-demo" for the annual tier and list-priced for PAYGO.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units: []
+  plans:
+  - name: Pay-as-you-go (PAYGO)
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Annual commitment
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
