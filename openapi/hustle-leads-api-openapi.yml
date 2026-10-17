@@ -321,6 +321,70 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    EvertrueExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - evertrue
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - '1.0'
+            remoteId:
+              type: string
+          required:
+          - version
+          - remoteId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    BbLuminateExternalLeadSchema:
+      type: object
+      properties:
+        integrationType:
+          type: string
+          enum:
+          - bbluminate
+        externalObject:
+          type: object
+          properties:
+            version:
+              type: string
+              enum:
+              - '1.0'
+            constituentId:
+              type: string
+          required:
+          - version
+          - constituentId
+          additionalProperties: false
+      required:
+      - integrationType
+      - externalObject
+      additionalProperties: false
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          description: Error code; usually the status code.
+        message:
+          type: string
+          description: Error message detailing the error.
+        hustleErrorCode:
+          type: string
+          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
+      required:
+      - code
+      - message
+      additionalProperties: false
     OptInOperation:
       type: object
       properties:
@@ -332,77 +396,65 @@ components:
       required:
       - type
       additionalProperties: false
-    VanMyVotersExternalLeadSchema:
+    SalesforceExternalLeadSchema:
       type: object
       properties:
         integrationType:
           type: string
           enum:
-          - van-myvoters
+          - salesforce
         externalObject:
           type: object
           properties:
             version:
               type: string
               enum:
-              - v4
-            vanId:
+              - '41.0'
+            salesforceObjectType:
               type: string
-            vanPhoneId:
-              type: number
+            salesforceObjectId:
+              type: string
           required:
           - version
-          - vanId
+          - salesforceObjectType
+          - salesforceObjectId
           additionalProperties: false
       required:
       - integrationType
       - externalObject
       additionalProperties: false
-    AttachLeadToIntegrationOperation:
+    OptOutOperation:
       type: object
       properties:
         type:
           type: string
           enum:
-          - attachLeadToIntegration
-          description: This operation will attach a lead in Hustle to a lead (or similar object) in an integration.
-        integrationId:
-          type: string
-          description: The ID of the integration to attach the lead to.
-        external:
-          oneOf:
-          - $ref: '#/components/schemas/VanExternalLeadSchema'
-          - $ref: '#/components/schemas/VanMyVotersExternalLeadSchema'
-          - $ref: '#/components/schemas/EvertrueExternalLeadSchema'
-          - $ref: '#/components/schemas/SalesforceExternalLeadSchema'
-          - $ref: '#/components/schemas/BbLuminateExternalLeadSchema'
-          discriminator:
-            propertyName: integrationType
-            mapping:
-              van: '#/components/schemas/VanExternalLeadSchema'
-              van-myvoters: '#/components/schemas/VanMyVotersExternalLeadSchema'
-              evertrue: '#/components/schemas/EvertrueExternalLeadSchema'
-              salesforce: '#/components/schemas/SalesforceExternalLeadSchema'
-              bbluminate: '#/components/schemas/BbLuminateExternalLeadSchema'
-      required:
-      - type
-      - integrationId
-      - external
-      additionalProperties: false
-    RemoveTagOperation:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - removeTag
-          description: This operation will remove a tag form a lead.
+          - optOut
+          description: This operation will opt a lead out of receiving messages from Hustle. If account sync is enabled, all other leads in the account with the same number will also be opted out.
         tagId:
           type: string
-          description: The ID of the tag to remove from the lead.
+          description: The ID of the tag to apply to the lead when opting them out. This must be an OptOut tag.
       required:
       - type
-      - tagId
+      additionalProperties: false
+    SetCustomFieldOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - setCustomField
+          description: This operation will set the value of a custom field on a lead.
+        customFieldName:
+          type: string
+          description: The label of the custom field to set. This must exist as a custom field in the organization.
+        value:
+          type: string
+          description: The value to set the custom field to.
+      required:
+      - type
+      - customFieldName
+      - value
       additionalProperties: false
     Lead:
       type: object
@@ -488,132 +540,31 @@ components:
       - createdAt
       additionalProperties: false
       description: A lead represents someone that messages and calls are sent to.
-    MakeActiveInGroupOperation:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - makeActiveInGroup
-          description: This operation will make the lead active in the group and add the lead to a specified group if they are not already a part of it. This is a permanent addition since these leads have message history and other auditing requirements that make them impossible to permanently delete. The only way to stop texting a lead in a group is to make them inactive using the MakeInactiveInGroup operation.
-        groupId:
-          type: string
-          description: The ID of the group to reactivate the lead in or add the lead to.
-      required:
-      - type
-      - groupId
-      additionalProperties: false
-    OptOutOperation:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - optOut
-          description: This operation will opt a lead out of receiving messages from Hustle. If account sync is enabled, all other leads in the account with the same number will also be opted out.
-        tagId:
-          type: string
-          description: The ID of the tag to apply to the lead when opting them out. This must be an OptOut tag.
-      required:
-      - type
-      additionalProperties: false
-    ErrorResponse:
-      type: object
-      properties:
-        code:
-          type: number
-          description: Error code; usually the status code.
-        message:
-          type: string
-          description: Error message detailing the error.
-        hustleErrorCode:
-          type: string
-          description: Sometimes available (generally with 422 responses). If the message is not descriptive enough to help identify the issue, pass this code to Hustle support.
-      required:
-      - code
-      - message
-      additionalProperties: false
-    EvertrueExternalLeadSchema:
+    VanMyVotersExternalLeadSchema:
       type: object
       properties:
         integrationType:
           type: string
           enum:
-          - evertrue
+          - van-myvoters
         externalObject:
           type: object
           properties:
             version:
               type: string
               enum:
-              - '1.0'
-            remoteId:
+              - v4
+            vanId:
               type: string
+            vanPhoneId:
+              type: number
           required:
           - version
-          - remoteId
+          - vanId
           additionalProperties: false
       required:
       - integrationType
       - externalObject
-      additionalProperties: false
-    MakeInactiveInGroupOperation:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - makeInactiveInGroup
-          description: This operation will make the lead inactive in the specified group. Because deleting a lead from a group is not allowed since the lead has message history, the only way to stop a lead from receiving messages meant for a group is to make them inactive.
-        groupId:
-          type: string
-          description: The ID of the group to make the lead inactive in.
-      required:
-      - type
-      - groupId
-      additionalProperties: false
-    BbLuminateExternalLeadSchema:
-      type: object
-      properties:
-        integrationType:
-          type: string
-          enum:
-          - bbluminate
-        externalObject:
-          type: object
-          properties:
-            version:
-              type: string
-              enum:
-              - '1.0'
-            constituentId:
-              type: string
-          required:
-          - version
-          - constituentId
-          additionalProperties: false
-      required:
-      - integrationType
-      - externalObject
-      additionalProperties: false
-    SetCustomFieldOperation:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - setCustomField
-          description: This operation will set the value of a custom field on a lead.
-        customFieldName:
-          type: string
-          description: The label of the custom field to set. This must exist as a custom field in the organization.
-        value:
-          type: string
-          description: The value to set the custom field to.
-      required:
-      - type
-      - customFieldName
-      - value
       additionalProperties: false
     VanExternalLeadSchema:
       type: object
@@ -641,33 +592,6 @@ components:
       - integrationType
       - externalObject
       additionalProperties: false
-    SalesforceExternalLeadSchema:
-      type: object
-      properties:
-        integrationType:
-          type: string
-          enum:
-          - salesforce
-        externalObject:
-          type: object
-          properties:
-            version:
-              type: string
-              enum:
-              - '41.0'
-            salesforceObjectType:
-              type: string
-            salesforceObjectId:
-              type: string
-          required:
-          - version
-          - salesforceObjectType
-          - salesforceObjectId
-          additionalProperties: false
-      required:
-      - integrationType
-      - externalObject
-      additionalProperties: false
     ApplyTagOperation:
       type: object
       properties:
@@ -682,6 +606,82 @@ components:
       required:
       - type
       - tagId
+      additionalProperties: false
+    MakeActiveInGroupOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - makeActiveInGroup
+          description: This operation will make the lead active in the group and add the lead to a specified group if they are not already a part of it. This is a permanent addition since these leads have message history and other auditing requirements that make them impossible to permanently delete. The only way to stop texting a lead in a group is to make them inactive using the MakeInactiveInGroup operation.
+        groupId:
+          type: string
+          description: The ID of the group to reactivate the lead in or add the lead to.
+      required:
+      - type
+      - groupId
+      additionalProperties: false
+    AttachLeadToIntegrationOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - attachLeadToIntegration
+          description: This operation will attach a lead in Hustle to a lead (or similar object) in an integration.
+        integrationId:
+          type: string
+          description: The ID of the integration to attach the lead to.
+        external:
+          oneOf:
+          - $ref: '#/components/schemas/VanExternalLeadSchema'
+          - $ref: '#/components/schemas/VanMyVotersExternalLeadSchema'
+          - $ref: '#/components/schemas/EvertrueExternalLeadSchema'
+          - $ref: '#/components/schemas/SalesforceExternalLeadSchema'
+          - $ref: '#/components/schemas/BbLuminateExternalLeadSchema'
+          discriminator:
+            propertyName: integrationType
+            mapping:
+              van: '#/components/schemas/VanExternalLeadSchema'
+              van-myvoters: '#/components/schemas/VanMyVotersExternalLeadSchema'
+              evertrue: '#/components/schemas/EvertrueExternalLeadSchema'
+              salesforce: '#/components/schemas/SalesforceExternalLeadSchema'
+              bbluminate: '#/components/schemas/BbLuminateExternalLeadSchema'
+      required:
+      - type
+      - integrationId
+      - external
+      additionalProperties: false
+    RemoveTagOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - removeTag
+          description: This operation will remove a tag form a lead.
+        tagId:
+          type: string
+          description: The ID of the tag to remove from the lead.
+      required:
+      - type
+      - tagId
+      additionalProperties: false
+    MakeInactiveInGroupOperation:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - makeInactiveInGroup
+          description: This operation will make the lead inactive in the specified group. Because deleting a lead from a group is not allowed since the lead has message history, the only way to stop a lead from receiving messages meant for a group is to make them inactive.
+        groupId:
+          type: string
+          description: The ID of the group to make the lead inactive in.
+      required:
+      - type
+      - groupId
       additionalProperties: false
 externalDocs:
   description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
