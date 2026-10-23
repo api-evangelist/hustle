@@ -774,3 +774,9 @@ components:
 externalDocs:
   description: Click here for a more in-depth user guide or links to prior versions of the api documentation.
   url: description.html
+x-provenance:
+  method: harvested
+  publisher: Hustle
+  source: https://api.hustle.com/v3/docs/swagger.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
